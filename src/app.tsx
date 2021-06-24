@@ -9,6 +9,8 @@ import {
 } from 'react-router-dom';
 import { flatRoutes } from './routes';
 import { AppRoute } from '__utils/type';
+import "antd/dist/antd.less";
+import 'antd/dist/antd.css';
 
 const App: React.FC = () => {
 	return (
