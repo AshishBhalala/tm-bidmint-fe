@@ -5,7 +5,7 @@ import Home from './views/home';
 import About from './views/about';
 import { AppRoute } from '__utils/type';
 import { FormModel } from 'components/proposal-form';
-import ProposalForm from 'views/buyer/buyer-proposal-form';
+import {ProposalForm} from 'views/buyer/buyer-proposal-form';
 
 // const AsyncAbout = Loadable({
 //     loader: () => import(/* webpackChunkName: "about" */ './views/about'),
@@ -64,7 +64,7 @@ export const routes: AppRoute[] = [
 	},
 	{
 		key: 3,
-		path:'/buyer-proposal-form',
+		path: '/buyer-proposal-form',
 		component: ProposalForm,
 		exact: true
 	},
