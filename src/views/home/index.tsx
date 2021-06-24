@@ -11,14 +11,7 @@ interface HomeProps {
 const Home: React.FC<HomeProps> = () => {
 	return (
 		<div>
-			<p>Home page</p>
-			<nav>
-				<ul>
-					<li>
-						<Link to="/about">About</Link>
-					</li>
-				</ul>
-			</nav>
+			<p>Welcome To Bidmint</p>
 			<hr />
 			{/* 
              1. Bug filed for push function of connected-react-router - https://github.com/supasate/connected-react-router/issues/319
