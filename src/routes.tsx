@@ -2,7 +2,6 @@
 import React from 'react';
 // import Loadable from 'react-loadable';
 import Home from './views/home';
-import ProposalForm from './views/buyer/buyer-proposal-form';
 import BuyerDashboard from './views/buyer/buyer-dashboard';
 import SellerDashboard from './views/selller/seller-dashboard';
 
