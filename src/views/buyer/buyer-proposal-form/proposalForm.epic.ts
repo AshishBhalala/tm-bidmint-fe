@@ -8,17 +8,17 @@ import { message } from "antd";
 import * as Actions from "constant/action"
 
 
-export const excuteSaveProposalForm : Epic< FluxStandardAction, FluxStandardAction> = (action$) => {
-    return action$.pipe(
-        ofType(Actions.SAVE_PROPOSAL_FORM),
-        mergeMap((action) => {
-            return post("motor.pt.com",action.payload).pipe(
-                map(
-                    (response: AjaxResponse | AjaxError) : FluxStandardAction => {
-                        
-                    }
-                )
-            )
-        })
-    )
-}
+// export const excuteSaveProposalForm : Epic< FluxStandardAction, FluxStandardAction> = (action$) => {
+//     return action$.pipe(
+//         ofType(Actions.SAVE_PROPOSAL_FORM),
+//         mergeMap((action) => {
+//             return post("motor.pt.com",action.payload).pipe(
+//                 map(
+//                     (response: AjaxResponse | AjaxError) : FluxStandardAction => {
+
+//                     }
+//                 )
+//             )
+//         })
+//     )
+// }
