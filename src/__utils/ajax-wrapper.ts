@@ -46,7 +46,7 @@ export const getContentTypeJsonHeader = () => {
     "Content-Type": "application/json"
   }
 }
-
+let baseUrl = 'http://localhost:1212';
 export const getJSON = (
 	url: string,
 	headers?: any
@@ -86,12 +86,13 @@ export const get = (
 	if (baseServiceURL) {
 		url = baseServiceURL + url;
 	}
+	url = baseUrl + url;
 	return ajax({
 		url: url,
 		method: "GET",
 		// body: { dummy: true },
 		// crossDomain: true,
-		withCredentials: true,
+		withCredentials: false,
 		headers: Object.assign({}, getDefaultHeaders(), headers)
 	}).pipe(
 		map(
@@ -110,12 +111,14 @@ export const post = (
 	if (baseServiceURL) {
 		url = baseServiceURL + url;
 	}
+	url = baseUrl + url;
+
 	return ajax({
 		url: url,
 		method: "POST",
 		body,
 		// crossDomain: true,
-		withCredentials: true,
+		withCredentials: false,
 		headers: Object.assign({}, getDefaultHeaders(), headers)
 	}).pipe(
 		map(
@@ -130,7 +133,7 @@ export const put = (url: string, headers?: any, showLoader?: boolean) => {
 		url: url,
 		method: "PUT",
 		// crossDomain: true,
-		withCredentials: true,
+		withCredentials: false,
 		headers: Object.assign({}, getDefaultHeaders(), headers)
 	}).pipe(
 		map(
@@ -153,7 +156,7 @@ export const deleteRequest = (
 		url: url,
 		method: "DELETE",
 		// crossDomain: true,
-		withCredentials: true,
+		withCredentials: false,
 		headers: Object.assign({}, getDefaultHeaders(), headers)
 	}).pipe(
 		map(

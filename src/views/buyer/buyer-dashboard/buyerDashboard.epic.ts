@@ -81,11 +81,11 @@ export const getProposalEpic: Epic<
   return action$.pipe(
     ofType(Actions.GET_PROPOSAL),
     mergeMap((action) => {
-      const { vertical, requestId } = action.payload;
+      const { type, id, status } = action.payload;
 			const url = resolveURLParams(
 				API_CONSTANTS.GET_PROPOSAL,
-				null,
-				{ vertical: vertical, requestId: requestId }
+				{ type: type, id: id, status: status },
+				null
 			  );
 			  
       return get(

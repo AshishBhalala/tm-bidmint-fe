@@ -1,7 +1,7 @@
 import { useMemo, useRef, DependencyList } from 'react';
 import isEqual from 'lodash/fp/isEqual';
 
-const useDeepCompare = (
+export const useDeepCompare = (
 	value: DependencyList | undefined
 ): DependencyList | undefined => {
 	const ref = useRef<DependencyList | undefined>();
