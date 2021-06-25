@@ -46,7 +46,7 @@ export const excutePublishProposal: Epic<FluxStandardAction, FluxStandardAction>
         ofType(Actions.PUBLISH_PROPOSAL_API),
         mergeMap((action) => {
             const url = resolveURLParams(
-                API_CONSTANTS.PUBLISH_PROPSAL,
+                API_CONSTANTS.PUBLISH_PROPOSAL,
                 action.payload,
                 null,
             )

@@ -11,35 +11,12 @@ export const resolveURLParams = (
 		});
 	}
 	if (searchParams) {
-		// url += '?';
-		// Object.keys(searchParams).forEach((key) => {
-		// 	if (searchParams[key] !== null && searchParams[key] !== undefined) {
-		// 		url += key + '=' + searchParams[key] + '&';
-		// 	}
-		// });
-		let count = 0;
-		for (let key in searchParams) {
-			if (count > 0) {
-				url = url + '&' + key + '=' + searchParams[key];
-			} else {
-				url = url + '?' + key + '=' + searchParams[key];
-			}
-			count++;
-		}
-	}
-	return url;
-};
-
-export const getQueryParamsFromString = (search: string) => {
-	let queryParams: any = {}
-	if (search && search.length) {
-		if (search[0] === '?') search = search.substring(1);
-		search.split('&').forEach((searchParamStr: string) => {
-			let searchParam: string[] = searchParamStr.split('=');
-			if (searchParam.length === 2) {
-				queryParams[searchParam[0]] = searchParam[1];
+		url += '?';
+		Object.keys(searchParams).forEach((key) => {
+			if (searchParams[key] !== null && searchParams[key] !== undefined) {
+				url += key + '=' + searchParams[key] + '&';
 			}
 		});
 	}
-	return queryParams;
-}
+	return url;
+};
