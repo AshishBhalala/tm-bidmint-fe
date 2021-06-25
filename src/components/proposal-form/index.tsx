@@ -17,7 +17,7 @@ export const FormModel = (props: any) => {
 
 
 	const [proposalData, setProposalData] = useState(null);
-	const [visible, setVisible] = useState(true);
+	const [visible, setVisible] = useState(false);
 
 	const onProposalModules = (values: any, proposalData : any) => {
 		proposalData['turnAroundTime'] = values.turnArroundTime;
@@ -29,7 +29,6 @@ export const FormModel = (props: any) => {
 	const onFinishFailed = (errorInfo: any) => {
 		console.log('Failed:', errorInfo);
 	};
-
 	const saveProposalFn = (saveType: string) => {
 		form
           .validateFields()

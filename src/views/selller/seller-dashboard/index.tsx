@@ -30,15 +30,20 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 
 	const [buyerId, setBuyerId] = useState<any>();
 	const [bidId, setBidId] = useState<any>();
+	const [bidAmount, setBidAmount] = useState<any>(null);
+
 
 	const [bidSaved, setBidSaved] = useState<boolean>(false);
 
 
 	const [sellerId, setSellerId] = useState<any>("74dd91fa-4564-45ca-a94f-610438628f9a");
 
+	const [proposalSaveType, setProposalSaveType] = useState<any>(null);
+
+
 
 	const { proposal, proposalError, proposalInfo, proposalInfoError } = propsToJS(useSelector(BuyerDashBoardSelector));
-	const { savedBids, savedBidError } = propsToJS(useSelector(SellerDashBoardSelector));
+	const { savedBids, savedBidError, publishBid, publishBidError } = propsToJS(useSelector(SellerDashBoardSelector));
 
 
 
@@ -56,6 +61,13 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 	}, [useDeepCompare(proposal)]);
 
 	useEffect(() => {
+		if(publishBid){
+			message.success("Bid saved successfully");
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [useDeepCompare(publishBid)]);
+
+	useEffect(() => {
 		if(proposalInfo){
 			setShowProposalDetail(true);
 
@@ -65,10 +77,15 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 
 	useEffect(() => {
 		if(savedBids){
-			message.success("Bid saved successfully")
-			setBidSaved(true);
-			setBidId(savedBids.body.meta.bidId);
+			if(proposalSaveType === 'save'){
+				message.success("Bid saved successfully")
+			} else {          
+				dispatch({ type: Actions.PUBLISH_BID_QUERY, payload: {bidId : savedBids.bidId, amount: bidAmount, percent: 20}});
+			}
+			setProposalSaveType(null);
 		}
+			setBidSaved(true);
+			//setBidId(savedBids.body.meta.bidId);
 		
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [savedBids]);
@@ -85,7 +102,7 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 		let proposalId = detail.id;
 		setBuyerId(detail.buyerId);
 		setProposalId(detail.id);
-		setProposalFormData(detail.proposalQuestions);
+		setProposalFormData(detail.proposalQuestions[0]);
 		//dispatch({ type: Actions.GET_PROPOSAL_INFO, payload: { proposalId : proposalId} });
 		setShowProposalDetail(true);
 
@@ -107,7 +124,7 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 		dispatch({ type: Actions.GET_PROPOSAL, payload: { type : "buyer", status: filter, id: "79c2c985-b2bd-44d8-8bca-9f499d3109da"} });
   }
 
-	const saveBidhandler = (formdata: any) => {
+	const saveBidhandler = (formdata: any, saveType : string) => {
 		let proposalQuestions: any[] = [];
 		Object.keys(formdata).map((key, value) => {
       let questionobject: any = {};
@@ -121,23 +138,14 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 			"proposalAnswers":proposalQuestions,
 			"buyerId":buyerId
 	 }
+	  setBidAmount(formdata.BidAmount);
+	  setProposalSaveType(saveType);
 		dispatch({ type: Actions.SAVE_BID_QUERY, payload: payLoad });
 
 		message.success("Proposal saved successfully")
 
 	}
 
-	const saveAndPublishBidhandler = (formdata: any) => {
-
-		if(bidSaved){
-			 dispatch({ type: Actions.PUBLISH_BID_QUERY, payload: {bidId : bidId}});
-		} else {
-			saveBidhandler(formdata);
-			dispatch({ type: Actions.PUBLISH_BID_QUERY, payload: {bidId : bidId}});
-
-		}
-
-	}
 	const menu = (
 		<Menu>
 			<Menu.Item key="0" onClick={()=>filterByhandler(null)}>
@@ -174,7 +182,7 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 					width="60rem"
 					onCancel={closeModel}
 					footer={null}>
-				<FormModel save={saveBidhandler} publish = {saveAndPublishBidhandler} type ="seller" buyerData={proposalFormData}></FormModel>
+				<FormModel save={saveBidhandler} publish = {saveBidhandler} type ="seller" buyerData={proposalFormData}></FormModel>
 			</Modal>}
 			
 		</div>
