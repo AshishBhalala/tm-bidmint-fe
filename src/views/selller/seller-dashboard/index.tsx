@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Card , Modal, Menu, Dropdown} from 'antd';
+import { Card , Modal, Menu, Dropdown, message} from 'antd';
 import { FormModel } from 'components/proposal-form';
 import { DownOutlined } from '@ant-design/icons';
 import { useDispatch} from 'react-redux';
@@ -8,6 +8,8 @@ import * as Actions from "constant/action";
 import {  useSelector } from "react-redux";
 import { propsToJS } from "__utils/immutable-to-js";
 import BuyerDashBoardSelector from "../../buyer/buyer-dashboard/buyerDashboard.selector";
+import SellerDashBoardSelector from "../seller-dashboard/sellerDashboard.selector";
+
 
 
 import { useDeepCompare } from "hooks/use-deep-memo";
@@ -22,9 +24,22 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 	const [showProposals, setShowProposals] = useState<boolean>(false);
 
 	const [proposalData, setProposalData] = useState<any>();
-	const [proposalInfoForIdData, setProposalInfoForIdData] = useState<any>();
+	const [proposalFormData, setProposalFormData] = useState<any>();
+
+	const [proposalId, setProposalId] = useState<any>();
+
+	const [buyerId, setBuyerId] = useState<any>();
+	const [bidId, setBidId] = useState<any>();
+
+	const [bidSaved, setBidSaved] = useState<boolean>(false);
+
+
+	const [sellerId, setSellerId] = useState<any>("74dd91fa-4564-45ca-a94f-610438628f9a");
+
 
 	const { proposal, proposalError, proposalInfo, proposalInfoError } = propsToJS(useSelector(BuyerDashBoardSelector));
+	const { savedBids, savedBidError } = propsToJS(useSelector(SellerDashBoardSelector));
+
 
 
 	useEffect(() => {
@@ -42,16 +57,36 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 
 	useEffect(() => {
 		if(proposalInfo){
-			setProposalInfoForIdData(proposalInfo)
 			setShowProposalDetail(true);
 
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [useDeepCompare(proposalInfo)]);
 
+	useEffect(() => {
+		if(savedBids){
+			message.success("Bid saved successfully")
+			setBidSaved(true);
+			setBidId(savedBids.body.meta.bidId);
+		}
+		
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [savedBids]);
+
+	useEffect(() => {
+		if(savedBidError){
+			message.success("Error Saving Bid")
+			setBidSaved(false);
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [savedBidError]);
+
 	const bidNowhandler = (detail: any) => {
 		let proposalId = detail.id;
-		dispatch({ type: Actions.GET_PROPOSAL_INFO, payload: { proposalId : proposalId} });
+		setBuyerId(detail.buyerId);
+		setProposalId(detail.id);
+		setProposalFormData(detail.proposalQuestions);
+		//dispatch({ type: Actions.GET_PROPOSAL_INFO, payload: { proposalId : proposalId} });
 		setShowProposalDetail(true);
 
 	}
@@ -61,12 +96,48 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
   }
 
 	const closeModel = () => {
+		setBidSaved(false);
+		setBuyerId(null);
+		setProposalId(null);
+		setProposalFormData(null);
 		setShowProposalDetail(false);
 	}
 
 	const filterByhandler = (filter: any) => {
 		dispatch({ type: Actions.GET_PROPOSAL, payload: { type : "buyer", status: filter, id: "79c2c985-b2bd-44d8-8bca-9f499d3109da"} });
   }
+
+	const saveBidhandler = (formdata: any) => {
+		let proposalQuestions: any[] = [];
+		Object.keys(formdata).map((key, value) => {
+      let questionobject: any = {};
+      questionobject[key] = formdata[key];
+      proposalQuestions.push(questionobject)
+    })
+
+		let payLoad = {
+			"proposalId": proposalId,
+			"sellerId": sellerId,
+			"proposalAnswers":proposalQuestions,
+			"buyerId":buyerId
+	 }
+		dispatch({ type: Actions.SAVE_BID_QUERY, payload: payLoad });
+
+		message.success("Proposal saved successfully")
+
+	}
+
+	const saveAndPublishBidhandler = (formdata: any) => {
+
+		if(bidSaved){
+			 dispatch({ type: Actions.PUBLISH_BID_QUERY, payload: {bidId : bidId}});
+		} else {
+			saveBidhandler(formdata);
+			dispatch({ type: Actions.PUBLISH_BID_QUERY, payload: {bidId : bidId}});
+
+		}
+
+	}
 	const menu = (
 		<Menu>
 			<Menu.Item key="0" onClick={()=>filterByhandler(null)}>
@@ -103,7 +174,7 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 					width="60rem"
 					onCancel={closeModel}
 					footer={null}>
-					<FormModel formSubmit = {formSubmit}></FormModel>
+				<FormModel save={saveBidhandler} publish = {saveAndPublishBidhandler} type ="seller" buyerData={proposalFormData}></FormModel>
 			</Modal>}
 			
 		</div>

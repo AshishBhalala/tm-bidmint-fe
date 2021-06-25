@@ -37,14 +37,17 @@ export const deleteCookie = (name: any, path: string | undefined) => {
 // };
 
 export const getDefaultHeaders = () => {
-  return {
-  };
+	return {
+		"Content-Type": "application/json"
+	};
 };
 
+/* This can be externalized in environment file. */
+
 export const getContentTypeJsonHeader = () => {
-  return {
-    "Content-Type": "application/json"
-  }
+	return {
+		"Content-Type": "application/json"
+	}
 }
 let baseUrl = 'http://localhost:1212';
 export const getJSON = (
@@ -75,6 +78,7 @@ const handleAPIError = (error: any) => {
 	}
 	return throwError(error);
 };
+
 
 export const get = (
 	url: string,
@@ -112,7 +116,6 @@ export const post = (
 		url = baseServiceURL + url;
 	}
 	url = baseUrl + url;
-
 	return ajax({
 		url: url,
 		method: "POST",
