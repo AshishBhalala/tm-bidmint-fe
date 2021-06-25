@@ -1,31 +1,62 @@
-import React from 'react';
-import { Card } from 'antd';
+import React, { useEffect, useState, useRef } from 'react';
+import { Card, message } from 'antd';
 import { FormModel } from 'components/proposal-form';
 import './index.css';
+import { useDispatch, useSelector } from 'react-redux';
+import * as Actions from 'constant/action'
+import { propsToJS } from '__utils/immutable-to-js';
+import saveProposalSelector from './proposalForm.selector';
+import { useDeepCompare } from "hooks/use-deep-memo";
 
-export class ProposalForm extends React.Component<any, any> {
 
-    constructor(props: any) {
-        super(props);
-        this.state = {
-          hovering: false
-        };
-      }
+export const ProposalForm = () => {
 
-    formSubmit = (formdata: any) =>{
-        console.log("values coming in buyer", formdata);
-        
+  const [state, setState] = useState({});
+  const componentWillUnmount = useRef(false)
+  const dispatch = useDispatch();
+  const { saveProposalResponseData, saveproposalResponseError } = propsToJS(useSelector(saveProposalSelector));
+	const [proposalSaveType, setProposalSaveType] = useState<any>(null);
+
+  useEffect(() => { 
+    if(saveProposalResponseData){
+      console.log("save type", proposalSaveType);
+      
+        if(proposalSaveType === 'save'){
+          message.success("Proposal saved successfully")
+        } else {
+          console.log("proposal Id ", saveProposalResponseData.meta.proposalId);
+          dispatch({type : Actions.PUBLISH_PROPOSAL_API, payload : saveProposalResponseData.meta.proposalId})
+        }
+        setProposalSaveType(null);
     }
-    render(){
+  }, [useDeepCompare(saveProposalResponseData)]);
 
-	return (
-		<div id="insurerProgress">
-			<Card title="Create Proposal Form">
-				<FormModel formSubmit = {this.formSubmit}></FormModel>
-			</Card>
-		</div>
-    );
-    }
+
+  const saveProposal = (formdata: any, saveType : string) => {
+    let proposalQuestions: any[] = [];
+    let name: string = "vaishnavi";
+    let buyerId: string = ""
+
+    Object.keys(formdata).map((key, value) => {
+      let questionobject: any = {};
+      questionobject[key] = formdata[key];
+      proposalQuestions.push(questionobject)
+    })
+
+    setProposalSaveType(saveType);
+    dispatch({ type: Actions.SAVE_PROPOSAL_FORM_API, payload: { "name": name, "proposalQuestions": proposalQuestions, "buyerId": buyerId } })
+    
+    
+  }
+
+  return (
+    <div id="insurerProgress">
+      <Card title="Create Proposal Form">
+        <FormModel saveProposal={saveProposal}></FormModel>
+      </Card>
+    </div>
+  );
+
 }
 
 export default { ProposalForm };

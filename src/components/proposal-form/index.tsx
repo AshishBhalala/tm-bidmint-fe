@@ -1,33 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Input, Button, Checkbox, Radio, Select } from 'antd';
 import './index.css';
-import { ColorPropType } from 'react-native';
+
 
 export const FormModel = (props: any) => {
-	const { Option } = Select;
+  const { Option } = Select;
 
-  let {
-    fromSumbit,
-  } = props;
-	const onFinish = (values: any) => {
-    console.log('success:', values );
-		props.formSubmit(values);
-	};
+   let {
+	 saveProposal,
+    } = props;
 
+	const [proposalData, setProposalData] = useState(null);
+	
 	const onFinishFailed = (errorInfo: any) => {
 		console.log('Failed:', errorInfo);
 	};
 
+	const saveProposalFn = (saveType: string) => {
+		saveProposal(proposalData, saveType);
+	};
+	
+
+	const onValuesChange = (changedValues: any, allValues: any) =>{
+		console.log("values on ", changedValues, allValues);
+		setProposalData(allValues)
+	}
 	return (
 		<Form
 			name="proposalForm"
 			initialValues={{ remember: true }}
-			onFinish={onFinish}
 			onFinishFailed={onFinishFailed}
+			onValuesChange= {onValuesChange}
 		>
 			<Form.Item
 				label="Number of employees"
-				name="companyName"
+				name="numberOfEmployees"
 				rules={[{ required: true, message: 'Min 7. Emp required' }]}
 			>
 				<Input placeholder="Enter number fo employees" type="number" />
@@ -47,8 +54,8 @@ export const FormModel = (props: any) => {
 					placeholder="Select a option and change input text above"
 					allowClear
 				>
-					<Option value="35"> 19-35</Option>
-					<Option value="45">35-45</Option>
+					<Option value="19_35"> 19-35</Option>
+					<Option value="35_45">35-45</Option>
 				</Select>
 			</Form.Item>
 
@@ -63,11 +70,11 @@ export const FormModel = (props: any) => {
 				]}
 			>
 				<Radio.Group>
-					<Radio value={1}> 1 Lac</Radio>
-					<Radio value={2}> 2 Lac</Radio>
-					<Radio value={3}> 3 Lac</Radio>
-					<Radio value={4}> 4 Lac</Radio>
-					<Radio value={5}> 5 Lac</Radio>
+					<Radio value={100000}> 1 Lac</Radio>
+					<Radio value={200000}> 2 Lac</Radio>
+					<Radio value={300000}> 3 Lac</Radio>
+					<Radio value={400000}> 4 Lac</Radio>
+					<Radio value={500000}> 5 Lac</Radio>
 				</Radio.Group>
 			</Form.Item>
 
@@ -82,8 +89,8 @@ export const FormModel = (props: any) => {
 				]}
 			>
 				<Radio.Group>
-					<Radio value={1}>Employee only</Radio>
-					<Radio value={2}>Employee, spouse and 2 children</Radio>
+					<Radio value="Employee_only">Employee only</Radio>
+					<Radio value="Employee_family">Employee, spouse and 2 children</Radio>
 				</Radio.Group>
 			</Form.Item>
 
@@ -104,16 +111,20 @@ export const FormModel = (props: any) => {
 			</Form.Item>
 
 			<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-				<Button type="primary" htmlType="submit">
-					Save and Publish
-				</Button>
-				<Button
+
+			   <Button
 					type="primary"
 					style={{ margin: '0 8px' }}
 					htmlType="submit"
+					onClick= {() => saveProposalFn('save')}
 				>
 					Save
 				</Button>
+
+				<Button type="primary" htmlType="submit" value="saveAndPublish" onClick= {() => saveProposalFn('saveAndPublish') }>
+					Save and Publish
+				</Button>
+
 			</Form.Item>
 		</Form>
 	);

@@ -74,7 +74,7 @@ export const routes: AppRoute[] = [
 		exact: true
 	},
 	{
-		key: 4,
+		key: 5,
 		path: '/seller-dashboard',
 		component: () => withDashboard(SellerDashboard),
 		exact: true

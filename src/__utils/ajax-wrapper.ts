@@ -7,7 +7,7 @@ const defaultHeaders: any = {
 };
 
 /* This can be externalized in environment file. */
-const baseUrl: string = 'https://swapi.co/api/';
+const baseUrl: string = 'http://localhost:1212/';
 
 export const get = (url: string, headers?: any): Observable<AjaxResponse> =>
 	ajax.get(baseUrl + url, Object.assign({}, defaultHeaders, headers));
