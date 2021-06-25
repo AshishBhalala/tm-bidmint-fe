@@ -4,50 +4,38 @@ import { size } from 'lodash';
 import 'bootstrap/dist/css/bootstrap.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { GET_BUYER_PROPOSAL_RECORDS } from 'constants/action';
+import BuyerProposalSelector from '../buyer-dashboard/buyer-proposal-selector';
+import { some } from 'lodash/fp';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-interface BuyerProposalCard {
-	dataSource : any
-}
-interface BuyerDashboardProps {
-	someProp: BuyerProposalCard[];
-}
-
-const dispatch = useDispatch();
-
-const BuyerDashboard: React.FC<BuyerDashboardProps> = ({
-	someProp
-}: BuyerDashboardProps) => {
+const BuyerDashboard: React.FC<any> = ( ) => {
+	const {getBuyerProposerDataOnSuccess, getBuyerProposerDataOnError} = useSelector(BuyerProposalSelector);
+	const objectData = {type : "buyer", status :"ACTIVE", id: "28d274f7-f73c-45e0-b848-6c709845d742"};
+	const dispatch = useDispatch();
 	useEffect(() => {
 		return () => {
-			dispatch({ type: GET_BUYER_PROPOSAL_RECORDS });
+			dispatch({ type: GET_BUYER_PROPOSAL_RECORDS, payload: objectData});
 		};
-	}, [dispatch]);
+	}, []);
+
+const [buyerProposerData,setBuyerProposerData]= useState([]);
+	useEffect(() => {
+		if(getBuyerProposerDataOnSuccess){
+			setBuyerProposerData ( getBuyerProposerDataOnSuccess);
+		}
+	}
+	)
 
 	return (
 		<div className="container-fluid">
-			{someProp.map(item => {
+			{buyerProposerData.map(item => {
 				return (
-					<BuyerDashboardCardItem
-                    dataSource={item.dataSource}
-						
-					></BuyerDashboardCardItem>
+					<Card>{item}</Card>
 				);
 			})}
 		</div>
 	);
 };
 
-export const BuyerDashboardCardItem: React.FC<BuyerProposalCard> = ({
-	dataSource
-}: BuyerProposalCard) => {
-	return (
-		<div className="row d-flex">
-			<Card>
-				<p>{dataSource}</p>
-			</Card>
-		</div>
-	);
-};
 
 export default BuyerDashboard;

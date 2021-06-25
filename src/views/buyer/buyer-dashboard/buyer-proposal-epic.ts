@@ -21,21 +21,13 @@ export const getBuyerProposalEpic: Epic<
 	return action$.pipe(
 		ofType(GET_BUYER_PROPOSAL_RECORDS),
 		mergeMap(action => {
-			const { vertical, searchParam, searchBy, mobile } = action.payload;
+			const { proposalBuyerId, type, status } = action.payload;
 
-			let url = `${resolveURLParams(
+			const url = resolveURLParams(
 				API_CONSTANTS.FETCH_BUYER_PROPOSAL_RECORDS,
-				null,
-				{
-					vertical: vertical,
-					searchParam: searchParam,
-					searchBy: searchBy
-				}
-			)}?searchBy=${searchBy}`;
-
-			if (mobile) {
-				url = url + `&mobile=${mobile}`;
-			}
+				{ id: proposalBuyerId, status: status, type:type },
+				null
+			  );
 			return get(url, {}).pipe(
 				map(
 					(
