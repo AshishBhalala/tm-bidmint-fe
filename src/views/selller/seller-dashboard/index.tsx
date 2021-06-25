@@ -22,7 +22,9 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 	const [showProposals, setShowProposals] = useState<boolean>(false);
 
 	const [proposalData, setProposalData] = useState<any>();
-	const { proposal, proposalError } = propsToJS(useSelector(BuyerDashBoardSelector));
+	const [proposalInfoForIdData, setProposalInfoForIdData] = useState<any>();
+
+	const { proposal, proposalError, proposalInfo, proposalInfoError } = propsToJS(useSelector(BuyerDashBoardSelector));
 
 
 	useEffect(() => {
@@ -38,8 +40,18 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [useDeepCompare(proposal)]);
 
+	useEffect(() => {
+		if(proposalInfo){
+			setProposalInfoForIdData(proposalInfo)
+			setShowProposalDetail(true);
+
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [useDeepCompare(proposalInfo)]);
+
 	const bidNowhandler = (detail: any) => {
 		let proposalId = detail.id;
+		dispatch({ type: Actions.GET_PROPOSAL_INFO, payload: { proposalId : proposalId} });
 		setShowProposalDetail(true);
 
 	}
@@ -51,22 +63,27 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 	const closeModel = () => {
 		setShowProposalDetail(false);
 	}
+
+	const filterByhandler = (filter: any) => {
+		dispatch({ type: Actions.GET_PROPOSAL, payload: { type : "buyer", status: filter, id: "79c2c985-b2bd-44d8-8bca-9f499d3109da"} });
+  }
 	const menu = (
 		<Menu>
-			<Menu.Item key="0">
-				Saved
+			<Menu.Item key="0" onClick={()=>filterByhandler(null)}>
+				All
 			</Menu.Item>
-			<Menu.Item key="1">
-				Pending
+			<Menu.Item key="1" onClick={()=>filterByhandler("DRAFT")}>
+				Draft
 			</Menu.Item>
-			<Menu.Item key="3">Active</Menu.Item>
+			<Menu.Item key="3" onClick={()=>filterByhandler("PENDING")}>Pending</Menu.Item>
+			<Menu.Item key="4" onClick={()=>filterByhandler("ACCEPTED")}>Accepted</Menu.Item>
 		</Menu>
 	);
 	return (
 		<div>
 			<Dropdown overlay={menu} trigger={['click']}>
       <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-      Filter By 
+      Filter By <DownOutlined/>
       </a>
   		</Dropdown>
 			{proposalData ? proposalData.map((item: any, index: any) => {
