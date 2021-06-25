@@ -11,25 +11,37 @@ import { useDeepCompare } from "hooks/use-deep-memo";
 
 export const ProposalForm = () => {
 
-  const [state, setState] = useState({});
-  const componentWillUnmount = useRef(false)
   const dispatch = useDispatch();
-  const { saveProposalResponseData, saveproposalResponseError } = propsToJS(useSelector(saveProposalSelector));
-	const [proposalSaveType, setProposalSaveType] = useState<any>(null);
+  const { saveProposalResponseData, saveproposalResponseError ,
+    publishProposalResponseData, publishProposalResponseError
+  } = propsToJS(useSelector(saveProposalSelector));
+  const [proposalSaveType, setProposalSaveType] = useState<any>(null);
+  const [proposalTurnAroundT, setproposalTurnAroundT] = useState<any>(null);
+
 
   useEffect(() => { 
     if(saveProposalResponseData){
-      console.log("save type", proposalSaveType);
       
         if(proposalSaveType === 'save'){
           message.success("Proposal saved successfully")
-        } else {
-          console.log("proposal Id ", saveProposalResponseData.meta.proposalId);
-          dispatch({type : Actions.PUBLISH_PROPOSAL_API, payload : saveProposalResponseData.meta.proposalId})
+        } else {          
+          let publishProposalrequest :any = {};
+          publishProposalrequest['proposalId']= saveProposalResponseData.meta.proposalId;
+          publishProposalrequest['turnAroundTime'] = proposalTurnAroundT;
+          console.log("publish proposal request", publishProposalrequest);
+
+          dispatch({type : Actions.PUBLISH_PROPOSAL_API, payload : publishProposalrequest})
         }
         setProposalSaveType(null);
+        setproposalTurnAroundT(null);
     }
   }, [useDeepCompare(saveProposalResponseData)]);
+
+  useEffect(() => { 
+    if(publishProposalResponseData){
+      message.success(publishProposalResponseData.message)
+    }
+  }, [useDeepCompare(publishProposalResponseData)]);
 
 
   const saveProposal = (formdata: any, saveType : string) => {
@@ -44,6 +56,7 @@ export const ProposalForm = () => {
     })
 
     setProposalSaveType(saveType);
+    setproposalTurnAroundT(formdata['turnAroundTime']);
     dispatch({ type: Actions.SAVE_PROPOSAL_FORM_API, payload: { "name": name, "proposalQuestions": proposalQuestions, "buyerId": buyerId } })
     
     

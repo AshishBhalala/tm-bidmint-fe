@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, Checkbox, Radio, Select } from 'antd';
 import './index.css';
+import TurnAroundPage from 'components/turn-around-model';
 
 
 export const FormModel = (props: any) => {
   const { Option } = Select;
+  const [form] = Form.useForm();
 
    let {
 	 saveProposal,
@@ -16,19 +18,28 @@ export const FormModel = (props: any) => {
 		console.log('Failed:', errorInfo);
 	};
 
-	const saveProposalFn = (saveType: string) => {
+	const saveProposalFn = (saveType: string) => {	
+		console.log("save proposal data",proposalData );	
 		saveProposal(proposalData, saveType);
 	};
 	
+	const saveAndPublishProposalFn = (saveType: string, proposalData: any) => {		
+		console.log("publsih proposal data",proposalData );
+		saveProposal(proposalData, saveType);
+	};
+
 
 	const onValuesChange = (changedValues: any, allValues: any) =>{
-		console.log("values on ", changedValues, allValues);
+		console.log("Proposal Form value ", changedValues, allValues);
 		setProposalData(allValues)
 	}
+
 	return (
 		<Form
+			form ={form}
 			name="proposalForm"
 			initialValues={{ remember: true }}
+			onFinish = {() => form.resetFields()}
 			onFinishFailed={onFinishFailed}
 			onValuesChange= {onValuesChange}
 		>
@@ -121,9 +132,7 @@ export const FormModel = (props: any) => {
 					Save
 				</Button>
 
-				<Button type="primary" htmlType="submit" value="saveAndPublish" onClick= {() => saveProposalFn('saveAndPublish') }>
-					Save and Publish
-				</Button>
+				<TurnAroundPage proposalform= {form} proposalQueAndAnsData = {proposalData} saveProposal = {saveAndPublishProposalFn} ></TurnAroundPage>
 
 			</Form.Item>
 		</Form>
