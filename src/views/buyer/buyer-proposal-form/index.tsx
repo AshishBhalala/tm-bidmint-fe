@@ -19,6 +19,14 @@ export const ProposalForm = () => {
   const [proposalTurnAroundT, setproposalTurnAroundT] = useState<any>(null);
 
 
+  useEffect(() => {
+    return () => {
+      dispatch({ type: Actions.RESET_PUBLISH_PROPOSAL_API_DATA });
+      dispatch({ type: Actions.RESET_SAVE_PROPOSAL_API_DATA });
+
+    };
+  }, []);
+
   useEffect(() => { 
     if(saveProposalResponseData){
       
@@ -30,6 +38,7 @@ export const ProposalForm = () => {
           publishProposalrequest['turnAroundTime'] = proposalTurnAroundT;
           console.log("publish proposal request", publishProposalrequest);
 
+          dispatch({ type: Actions.RESET_PUBLISH_PROPOSAL_API_DATA });
           dispatch({type : Actions.PUBLISH_PROPOSAL_API, payload : publishProposalrequest})
         }
         setProposalSaveType(null);
@@ -54,18 +63,22 @@ export const ProposalForm = () => {
       questionobject[key] = formdata[key];
       proposalQuestions.push(questionobject)
     })
-
+    console.log("turn around time ", formdata['turnAroundTime']);
+    
     setProposalSaveType(saveType);
     setproposalTurnAroundT(formdata['turnAroundTime']);
+
+    dispatch({ type: Actions.RESET_SAVE_PROPOSAL_API_DATA });
     dispatch({ type: Actions.SAVE_PROPOSAL_FORM_API, payload: { "name": name, "proposalQuestions": proposalQuestions, "buyerId": buyerId } })
     
     
   }
 
+  
   return (
     <div id="insurerProgress">
       <Card title="Create Proposal Form">
-        <FormModel saveProposal={saveProposal}></FormModel>
+        <FormModel save={saveProposal} publish = {saveProposal} type ="buyer" ></FormModel>
       </Card>
     </div>
   );

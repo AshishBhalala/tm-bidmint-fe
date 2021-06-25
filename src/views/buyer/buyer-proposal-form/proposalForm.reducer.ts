@@ -28,6 +28,10 @@ export default function saveProposalReducer(
             return merge(state, fromJS({publishProposalResponseData: action.payload.data}));
         case 'PUBLISH_PROPOSAL_API_ERROR':
             return merge(state, fromJS({ publishProposalResponseError: action.error }));
+        case "RESET_SAVE_PROPOSAL_API_DATA":
+            return merge(state, fromJS({ saveProposalResponseData: null, saveproposalResponseError:null}));
+        case "RESET_PUBLISH_PROPOSAL_API_DATA":
+            return merge(state, fromJS({ publishProposalResponseData: null, publishProposalResponseError:null}));
         default:
             return state;
     }

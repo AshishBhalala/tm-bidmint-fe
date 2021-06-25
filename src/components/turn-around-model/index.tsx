@@ -9,16 +9,20 @@ interface Values {
 
 interface TAmodelFormProps {
   visible: boolean;
-  onCreate: (values: Values) => void;
+  onCreate: (values: Values, proposalData : any) => void;
   onCancel: () => void;
+  proposalData : unknown
 }
 
-const TurnAroundModelForm: React.FC<TAmodelFormProps> = ({
+export const TurnAroundModelForm: React.FC<TAmodelFormProps> = ({
   visible,
   onCreate,
   onCancel,
+  proposalData
 }) => {
   const [form] = Form.useForm();
+  console.log("visible", visible);
+  
   return (
     <Modal
       visible={visible}
@@ -31,7 +35,7 @@ const TurnAroundModelForm: React.FC<TAmodelFormProps> = ({
           .validateFields()
           .then(values => {
             form.resetFields();
-            onCreate(values);
+            onCreate(values, proposalData);
           })
           .catch(info => {
             console.log('Validate Failed:', info);
@@ -60,49 +64,3 @@ const TurnAroundModelForm: React.FC<TAmodelFormProps> = ({
 };
 
 
-
-export const TurnAroundPage = (props : any) => {
-  const [visible, setVisible] = useState(false);
-
-  let {
-    saveProposal,
-    proposalQueAndAnsData,
-    proposalform
-     } = props;
-
-  const onPublishProposal = (values: any) => {
-    proposalQueAndAnsData['turnAroundTime']= values.turnArroundTime;
-    console.log("publsih proposal data",proposalQueAndAnsData );
-    setVisible(false);
-    saveProposal('saveAndPublish', proposalQueAndAnsData);
-  };
-
-  
-  return (
-    <div>
-      <Button
-        type="primary"
-        onClick={ () => {
-          proposalform
-          .validateFields()
-          .then((values: any) => {
-            proposalform.resetFields();
-            setVisible(true);
-          })
-        }}
-      >
-        Save And Publish
-      </Button>
-      <TurnAroundModelForm
-        visible={visible}
-        onCreate={onPublishProposal}
-        onCancel={() => {
-        setVisible(false);
-        }}
-      />
-    </div>
-  );
-};
-
-
-export default TurnAroundPage;
