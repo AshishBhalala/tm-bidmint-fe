@@ -1,20 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSelector } from "reselect";
 
-const getIsFetching = (state: any) =>
-  state.getIn(["buyerDashboardReducer", "isFetching"]);
-const getSaveProposal = (state: any) =>
-  state.getIn(["buyerDashboardReducer", "savedProposal"]);
-const getSaveProposalError = (state: any) =>
-  state.getIn(["buyerDashboardReducer", "savedProposalError"]);
+const getSaveproposaldata = (state: any) =>
+  state.getIn(["buyerDashboardReducer", "saveproposaldata"]);
+const getSaveproposalError = (state: any) =>
+  state.getIn(["buyerDashboardReducer", "saveproposalError"]);
 const getPublishProposal = (state: any) =>
-  state.getIn(["buyerDashboardReducer", "publishProposal"]);
+  state.getIn(["buyerDashboardReducer", "publishPropsalData"]);
 const getPublishProposalError = (state: any) =>
   state.getIn(["buyerDashboardReducer", "publishProposalError"]);
-const getProposal = (state: any) =>
-  state.getIn(["buyerDashboardReducer", "proposal"]);
-const getProposalError = (state: any) =>
-  state.getIn(["buyerDashboardReducer", "proposalError"]);
+const getAllProposal = (state: any) =>
+  state.getIn(["buyerDashboardReducer", "allProposal"]);
+const getAllProposalError = (state: any) =>
+  state.getIn(["buyerDashboardReducer", "allProposalError"]);
 const getProposalInfo = (state: any) =>
   state.getIn(["buyerDashboardReducer", "proposalInfo"]);
 const getProposalInfoError = (state: any) =>
@@ -22,34 +20,31 @@ const getProposalInfoError = (state: any) =>
 
 const BuyerDashBoardSelector = createSelector(
   [
-    getIsFetching,
-    getSaveProposal,
-    getSaveProposalError,
+    getSaveproposaldata,
+    getSaveproposalError,
     getPublishProposal,
     getPublishProposalError,
-    getProposal,
-    getProposalError,
+    getAllProposal,
+    getAllProposalError,
     getProposalInfo,
     getProposalInfoError
   ],
   (
-    isFetching,
-    savedProposal,
-    savedProposalError,
-    publishProposal,
+    saveproposaldata,
+    saveproposalError,
+    publishPropsalData,
     publishProposalError,
-    proposal,
-    proposalError,
+    allProposal,
+    allProposalError,
     proposalInfo,
     proposalInfoError
   ) => ({
-    isFetching,
-    savedProposal,
-    savedProposalError,
-    publishProposal,
+    saveproposaldata,
+    saveproposalError,
+    publishPropsalData,
     publishProposalError,
-    proposal,
-    proposalError,
+    allProposal,
+    allProposalError,
     proposalInfo,
     proposalInfoError
   })

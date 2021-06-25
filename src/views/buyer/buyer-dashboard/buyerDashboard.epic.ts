@@ -74,6 +74,7 @@ export const publishProposalEpic: Epic<FluxStandardAction, FluxStandardAction> =
       })
   );
 };
+
 export const getProposalEpic: Epic<
   FluxStandardAction,
   FluxStandardAction
@@ -94,7 +95,7 @@ export const getProposalEpic: Epic<
       ).pipe(
         map(
           (response: AjaxResponse | AjaxError): FluxStandardAction => {
-            if (response.status === 200) {
+            if (response.status === 200) {              
               return {
                 type: Actions.GET_PROPOSAL_SUCCESS,
                 payload: {

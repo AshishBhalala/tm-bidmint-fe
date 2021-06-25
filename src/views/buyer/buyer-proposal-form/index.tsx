@@ -56,7 +56,7 @@ export const ProposalForm = () => {
   const saveProposal = (formdata: any, saveType : string) => {
     let proposalQuestions: any[] = [];
     let name: string = "vaishnavi";
-    let buyerId: string = ""
+    let buyerId: string = "5a96c0684c27af02740a4c74"
 
     Object.keys(formdata).map((key, value) => {
       let questionobject: any = {};
