@@ -16,7 +16,7 @@ interface BuyerDashboardProps {
 
 const BuyerDashboard: React.FC<BuyerDashboardProps> = () => {
 
-	const buyerIdValue = window.location.href.split('buyerId=')[1];
+	const buyerIdValue : any = window.location.href.split('buyerId=')[1] || window.sessionStorage.getItem('buyerId');
 	window.sessionStorage.setItem('buyerId', buyerIdValue);
 	
 	const dispatch = useDispatch();
