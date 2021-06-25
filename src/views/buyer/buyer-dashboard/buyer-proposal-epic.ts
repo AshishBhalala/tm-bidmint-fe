@@ -3,7 +3,7 @@ import {
 	GET_BUYER_PROPOSAL_RECORDS,
 	BUYER_PROPOSAL_ERROR,
 	BUYER_PROPOSAL_SUCCESS
-} from 'views/constants/actions';
+} from 'constants/action';
 import { FluxStandardAction } from '__utils/type';
 import { fromJS, merge } from 'immutable';
 import { Epic, ofType } from 'redux-observable';

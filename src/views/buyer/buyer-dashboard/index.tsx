@@ -3,13 +3,11 @@ import { Card } from 'antd';
 import { size } from 'lodash';
 import 'bootstrap/dist/css/bootstrap.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { GET_BUYER_PROPOSAL_RECORDS } from 'views/constants/actions';
+import { GET_BUYER_PROPOSAL_RECORDS } from 'constants/action';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
 interface BuyerProposalCard {
-	budgeted: number;
-	spent: number;
-	category: string;
+	dataSource : any
 }
 interface BuyerDashboardProps {
 	someProp: BuyerProposalCard[];
@@ -31,9 +29,8 @@ const BuyerDashboard: React.FC<BuyerDashboardProps> = ({
 			{someProp.map(item => {
 				return (
 					<BuyerDashboardCardItem
-						category={item.category}
-						budgeted={item.budgeted}
-						spent={item.spent}
+                    dataSource={item.dataSource}
+						
 					></BuyerDashboardCardItem>
 				);
 			})}
@@ -42,16 +39,12 @@ const BuyerDashboard: React.FC<BuyerDashboardProps> = ({
 };
 
 export const BuyerDashboardCardItem: React.FC<BuyerProposalCard> = ({
-	budgeted,
-	spent,
-	category
+	dataSource
 }: BuyerProposalCard) => {
 	return (
 		<div className="row d-flex">
 			<Card>
-				<p>{category}</p>
-				<p>{budgeted}</p>
-				<p>{spent}</p>
+				<p>{dataSource}</p>
 			</Card>
 		</div>
 	);

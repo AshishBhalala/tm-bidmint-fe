@@ -5,7 +5,7 @@ import { AjaxResponse, AjaxError } from 'rxjs/ajax';
 import { get, post } from '__utils/ajax-wrapper';
 import { FluxStandardAction } from '__utils/type';
 import { message } from 'antd';
-import * as Actions from 'constant/action';
+import * as Actions from 'constants/action';
 
 // export const excuteSaveProposalForm : Epic< FluxStandardAction, FluxStandardAction> = (action$) => {
 //     return action$.pipe(
