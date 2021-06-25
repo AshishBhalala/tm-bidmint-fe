@@ -35,6 +35,7 @@ export const deleteCookie = (name: any, path: string | undefined) => {
 //   //   typeof document.cookie === "string" &&
 //   //   getCookie("csrftoken")
 // };
+let baseUrl = 'http://localhost:1212';
 
 export const getDefaultHeaders = () => {
 	return {
@@ -43,7 +44,6 @@ export const getDefaultHeaders = () => {
 };
 
 /* This can be externalized in environment file. */
-const baseUrl: string = 'http://localhost:1212';
 
 export const getContentTypeJsonHeader = () => {
 	return {

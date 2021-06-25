@@ -29,7 +29,6 @@ export const FormModel = (props: any) => {
 	const onFinishFailed = (errorInfo: any) => {
 		console.log('Failed:', errorInfo);
 	};
-
 	const saveProposalFn = (saveType: string) => {
 		form
           .validateFields()
@@ -80,7 +79,7 @@ export const FormModel = (props: any) => {
 				name="numberOfEmployees"
 				rules={[{ required: true, message: 'Min 7. Emp required' }]}
 			>
-				<Input placeholder="Enter number fo employees" type="number" disabled={type === 'seller'} />
+				<Input placeholder="Enter number fo employees" type="number" />
 			</Form.Item>
 
 			<Form.Item
@@ -96,7 +95,6 @@ export const FormModel = (props: any) => {
 				<Select
 					placeholder="Select a option and change input text above"
 					allowClear
-					disabled={type === 'seller'}
 				>
 					<Option value="19_35"> 19-35</Option>
 					<Option value="35_45">35-45</Option>
@@ -113,7 +111,7 @@ export const FormModel = (props: any) => {
 					}
 				]}
 			>
-				<Radio.Group disabled={type === 'seller'}>
+				<Radio.Group>
 					<Radio value={100000}> 1 Lac</Radio>
 					<Radio value={200000}> 2 Lac</Radio>
 					<Radio value={300000}> 3 Lac</Radio>
@@ -132,7 +130,7 @@ export const FormModel = (props: any) => {
 					}
 				]}
 			>
-				<Radio.Group disabled={type === 'seller'}>
+				<Radio.Group >
 					<Radio value="Employee_only">Employee only</Radio>
 					<Radio value="Employee_family">Employee, spouse and 2 children</Radio>
 				</Radio.Group>
@@ -143,7 +141,7 @@ export const FormModel = (props: any) => {
 				valuePropName="checked"
 				wrapperCol={{ offset: 8, span: 16 }}
 			>
-				<Checkbox disabled={type === 'seller'} >Buying for first time</Checkbox>
+				<Checkbox >Buying for first time</Checkbox>
 			</Form.Item>
 
 			<Form.Item
@@ -151,7 +149,7 @@ export const FormModel = (props: any) => {
 				valuePropName="checked"
 				wrapperCol={{ offset: 8, span: 16 }}
 			>
-				<Checkbox disabled={type === 'seller'} >Existing policy is expiring </Checkbox>
+				<Checkbox  >Existing policy is expiring </Checkbox>
 			</Form.Item>
 
 			<Form.Item

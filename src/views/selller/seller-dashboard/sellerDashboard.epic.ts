@@ -15,19 +15,12 @@ export const saveBidEpic: Epic<FluxStandardAction, FluxStandardAction> = (action
       mergeMap((action: FluxStandardAction) => {
 
           const { proposalId, sellerId, buyerId, proposalAnswers } = action.payload;
-
-          const url = resolveURLParams(
-              API_CONSTANTS.SAVE_BID,
-              { proposalId: proposalId, sellerId: sellerId, buyerId: buyerId, proposalAnswers: proposalAnswers },
-              null,
-          );
-
-          return post(url, action.payload.data, { "Content-Type": "application/json" }, true).pipe(
+          return post(API_CONSTANTS.SAVE_BID, action.payload, { "Content-Type": "application/json" }, true).pipe(
               map((response: AjaxResponse | AjaxError): FluxStandardAction => {
-                  if (response.status === 200 && response.response.meta.message === "success") {
+                  if (response.status === 200 ) {
                       return {
                           type: Actions.SAVE_BID_SUCCESS,
-                          payload: response.response.data
+                          payload: response.response.meta
                       };
                   } else {
                       return {
@@ -47,20 +40,20 @@ export const publishBidEpic: Epic<FluxStandardAction, FluxStandardAction> = (act
       ofType(Actions.PUBLISH_BID_QUERY),
       mergeMap((action: FluxStandardAction) => {
 
-          const { bidId} = action.payload;
+          const { bidId, amount, percent} = action.payload;
 
           const url = resolveURLParams(
               API_CONSTANTS.PUBLISH_BID,
-              { bidId: bidId},
+              { bidId: bidId, amount:amount, percent},
               null,
           );
 
           return post(url, action.payload.data, { "Content-Type": "application/json" }, true).pipe(
               map((response: AjaxResponse | AjaxError): FluxStandardAction => {
-                  if (response.status === 200 && response.response.meta.message === "success") {
+                  if (response.status === 200) {
                       return {
                           type: Actions.PUBLISH_BID_SUCCESS,
-                          payload: response.response.data
+                          payload: response.response
                       };
                   } else {
                       return {

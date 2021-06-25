@@ -19,13 +19,13 @@ export default function sellerDashboardReducer(
 ) {
   switch (action.type) {
     case Actions.SAVE_BID_SUCCESS:
-      return merge(state, fromJS({ premiumInsights: action.payload.data }));
+      return merge(state, fromJS({ savedBids: action.payload }));
     case Actions.SAVE_BID_ERROR:
-      return merge(state, fromJS({ premiumInsights: action.payload.data }));
+      return merge(state, fromJS({ savedBidError: action.payload.data }));
     case Actions.PUBLISH_BID_SUCCESS:
-      return merge(state, fromJS({ premiumInsights: action.payload.data }));
+      return merge(state, fromJS({ publishBid: action.payload.data }));
     case Actions.PUBLISH_BID_ERROR:
-      return merge(state, fromJS({ premiumInsights: action.payload.data }));
+      return merge(state, fromJS({ publishBidError: action.payload.data }));
     case Actions.BIDS_BY_SELLER_SUCCESS:
       return merge(state, fromJS({ premiumInsights: action.payload.data }));
     case Actions.BIDS_BY_SELLER_ERROR:
