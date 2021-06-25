@@ -55,3 +55,32 @@ const App: React.FC = () => {
 };
 
 export default App;
+
+
+// import React from 'react';
+// import './app.css';
+// import BuyerDashboard from "views/buyer/buyer-dashboard";
+
+// const homeBudgets = [
+//    {
+//        budgeted: 500,
+//        spent: 200,
+//        category: "Food",
+//    },
+//    {
+//        budgeted: 1000,
+//        spent: 1500,
+//        category: "Utilities",
+//    }
+// ]
+
+// function App() {
+//    return (
+//        <div className="App">
+//            <header className="App-header">Buyer Proposal Dashboard</header>
+//            <BuyerDashboard someProp={yyh}
+//        </div>
+//    );
+// }
+
+// export default App;

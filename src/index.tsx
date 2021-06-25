@@ -8,6 +8,8 @@ import './index.css';
 import App from './app';
 import * as serviceWorker from './serviceWorker';
 import configureStore, { browserHistory } from './configure-store';
+import BuyerDashboard from 'views/buyer/buyer-dashboard';
+import home from 'views/home';
 // import configMock from './mocks/config.json';
 
 const initialState = {};
@@ -15,7 +17,6 @@ export const store = configureStore(initialState);
 const rootElement = document.getElementById('root');
 
 // store.dispatch({ type: 'FETCH_CONFIG', data: configMock })
-
 ReactDOM.render(
 	<Provider store={store}>
 		<ConnectedRouter history={browserHistory}>
