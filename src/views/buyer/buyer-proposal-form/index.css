@@ -1,0 +1,16 @@
+
+#insurerProgress {
+    display        : flex;
+    justify-content: center;
+    margin-top     : 5%;
+
+}
+
+#insurerProgress .ant-card-head {
+    background-color: rgb(211, 231, 223);
+    background-image: linear-gradient(rgb(158, 207, 247), rgb(242, 248, 246));
+}
+
+#insurerProgress .ant-card-bordered {
+    border: 2px solid #f0f0f0
+}

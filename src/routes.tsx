@@ -2,8 +2,12 @@
 import React from 'react';
 // import Loadable from 'react-loadable';
 import Home from './views/home';
-import About from './views/about';
+import BuyerDashboard from './views/buyer/buyer-dashboard';
+import SellerDashboard from './views/selller/seller-dashboard';
+
 import { AppRoute } from '__utils/type';
+import { FormModel } from 'components/proposal-form';
+import {ProposalForm} from 'views/buyer/buyer-proposal-form';
 
 // const AsyncAbout = Loadable({
 //     loader: () => import(/* webpackChunkName: "about" */ './views/about'),
@@ -47,6 +51,9 @@ export const spreadRoutes = (
 	}, []);
 };
 
+const withDashboard = (WrappedComponent: any) => (
+	<WrappedComponent></WrappedComponent>
+);
 export const routes: AppRoute[] = [
 	{
 		key: 1,
@@ -55,11 +62,23 @@ export const routes: AppRoute[] = [
 		exact: true
 	},
 	{
-		key: 2,
-		path: '/about',
-		component: About,
+		key: 3,
+		path: '/buyer-proposal-form',
+		component: () => withDashboard(ProposalForm),
 		exact: true
 	},
+	{
+		key: 4,
+		path: '/buyer-dashboard',
+		component: () => withDashboard(BuyerDashboard),
+		exact: true
+	},
+	{
+		key: 4,
+		path: '/seller-dashboard',
+		component: () => withDashboard(SellerDashboard),
+		exact: true
+	}
 	// /* DO NOT CHANGE THE ORDER OF THESE BELOW */
 	// {
 	//     path: '/crm',
@@ -72,11 +91,11 @@ export const routes: AppRoute[] = [
 	//         },
 	//     ],
 	// },
-	{
-		key: 29,
-		component: () => <div>Error page</div>,
-		path: '**'
-	}
+	// {
+	// 	key: 29,
+	// 	component: () => <div>Error page</div>,
+	// 	path: '**'
+	// }
 ];
 
 export const flatRoutes = spreadRoutes(routes);

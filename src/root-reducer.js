@@ -1,9 +1,8 @@
 import { combineReducers } from 'redux-immutable';
 import { connectRouter } from 'connected-react-router';
-import aboutReducer from './views/about/about.reducer';
-
+import buyerProposerReducer from 'views/buyer/buyer-dashboard/buyer-proposal-reducer';
 const reducers = {
-	aboutReducer
+	buyerProposerReducer
 };
 export default function createRootReducer(asyncReducers = {}, browserHistory) {
 	const rootReducer = combineReducers({
