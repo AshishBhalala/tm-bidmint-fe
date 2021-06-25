@@ -1,53 +1,67 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSelector } from "reselect";
-
-const getSaveproposaldata = (state: any) =>
-  state.getIn(["buyerDashboardReducer", "saveproposaldata"]);
-const getSaveproposalError = (state: any) =>
-  state.getIn(["buyerDashboardReducer", "saveproposalError"]);
+const getIsFetching = (state: any) =>
+  state.getIn(["buyerDashboardReducer", "isFetching"]);
+const getSaveProposal = (state: any) =>
+  state.getIn(["buyerDashboardReducer", "savedProposal"]);
+const getSaveProposalError = (state: any) =>
+  state.getIn(["buyerDashboardReducer", "savedProposalError"]);
 const getPublishProposal = (state: any) =>
-  state.getIn(["buyerDashboardReducer", "publishPropsalData"]);
+  state.getIn(["buyerDashboardReducer", "publishProposal"]);
 const getPublishProposalError = (state: any) =>
   state.getIn(["buyerDashboardReducer", "publishProposalError"]);
-const getAllProposal = (state: any) =>
-  state.getIn(["buyerDashboardReducer", "allProposal"]);
-const getAllProposalError = (state: any) =>
-  state.getIn(["buyerDashboardReducer", "allProposalError"]);
+const getProposal = (state: any) =>
+  state.getIn(["buyerDashboardReducer", "proposal"]);
+const getProposalError = (state: any) =>
+  state.getIn(["buyerDashboardReducer", "proposalError"]);
 const getProposalInfo = (state: any) =>
   state.getIn(["buyerDashboardReducer", "proposalInfo"]);
 const getProposalInfoError = (state: any) =>
   state.getIn(["buyerDashboardReducer", "proposalInfoError"]);
-
+const getProposalBids = (state: any) =>
+  state.getIn(["buyerDashboardReducer", "proposalBids"]);
+const getproposalBidsError = (state: any) =>
+  state.getIn(["buyerDashboardReducer", "proposalBidsError"]);
 const BuyerDashBoardSelector = createSelector(
   [
-    getSaveproposaldata,
-    getSaveproposalError,
+    getIsFetching,
+    getSaveProposal,
+    getSaveProposalError,
     getPublishProposal,
     getPublishProposalError,
-    getAllProposal,
-    getAllProposalError,
+    getProposal,
+    getProposalError,
     getProposalInfo,
-    getProposalInfoError
+    getProposalInfoError,
+    getProposalBids,
+    getproposalBidsError
   ],
   (
-    saveproposaldata,
-    saveproposalError,
-    publishPropsalData,
+    isFetching,
+    savedProposal,
+    savedProposalError,
+    publishProposal,
     publishProposalError,
-    allProposal,
-    allProposalError,
+    proposal,
+    proposalError,
     proposalInfo,
-    proposalInfoError
+    proposalInfoError,
+    proposalBids,
+    proposalBidsError
   ) => ({
-    saveproposaldata,
-    saveproposalError,
-    publishPropsalData,
+    isFetching,
+    savedProposal,
+    savedProposalError,
+    publishProposal,
     publishProposalError,
-    allProposal,
-    allProposalError,
+    proposal,
+    proposalError,
     proposalInfo,
-    proposalInfoError
+    proposalInfoError,
+    proposalBids,
+    proposalBidsError
   })
 );
-
 export default BuyerDashBoardSelector;
+
+

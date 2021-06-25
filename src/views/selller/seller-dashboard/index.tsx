@@ -48,7 +48,7 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 
 
 	useEffect(() => {
-			dispatch({ type: Actions.GET_PROPOSAL, payload: { type : "buyer", status : "DRAFT", id: "79c2c985-b2bd-44d8-8bca-9f499d3109da"} })
+			dispatch({ type: Actions.GET_PROPOSAL, payload: { type : "seller"} })
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dispatch]);
 
@@ -80,7 +80,7 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 			if(proposalSaveType === 'save'){
 				message.success("Bid saved successfully")
 			} else {          
-				dispatch({ type: Actions.PUBLISH_BID_QUERY, payload: {bidId : savedBids.bidId, amount: bidAmount, percent: 20}});
+				dispatch({ type: Actions.PUBLISH_BID_QUERY, payload: {bidId : savedBids.bidId, amount: bidAmount, percent: 100}});
 			}
 			setProposalSaveType(null);
 		}
@@ -121,17 +121,12 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 	}
 
 	const filterByhandler = (filter: any) => {
-		dispatch({ type: Actions.GET_PROPOSAL, payload: { type : "buyer", status: filter, id: "79c2c985-b2bd-44d8-8bca-9f499d3109da"} });
+		dispatch({ type: Actions.GET_PROPOSAL, payload: { type : "seller", status: filter,} });
   }
 
 	const saveBidhandler = (formdata: any, saveType : string) => {
 		let proposalQuestions: any[] = [];
-		Object.keys(formdata).map((key, value) => {
-      let questionobject: any = {};
-      questionobject[key] = formdata[key];
-      proposalQuestions.push(questionobject)
-    })
-
+		 proposalQuestions.push(formdata);
 		let payLoad = {
 			"proposalId": proposalId,
 			"sellerId": sellerId,
@@ -141,9 +136,6 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 	  setBidAmount(formdata.BidAmount);
 	  setProposalSaveType(saveType);
 		dispatch({ type: Actions.SAVE_BID_QUERY, payload: payLoad });
-
-		message.success("Proposal saved successfully")
-
 	}
 
 	const menu = (
@@ -156,6 +148,7 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 			</Menu.Item>
 			<Menu.Item key="3" onClick={()=>filterByhandler("PENDING")}>Pending</Menu.Item>
 			<Menu.Item key="4" onClick={()=>filterByhandler("ACCEPTED")}>Accepted</Menu.Item>
+			<Menu.Item key="5" onClick={()=>filterByhandler("ACTIVE")}>Active</Menu.Item>
 		</Menu>
 	);
 	return (
@@ -168,9 +161,9 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 			{proposalData ? proposalData.map((item: any, index: any) => {
 				return (
 				<Card id={index} style={{marginTop: 16 }} title="Card title" extra={<a href="#" onClick={() => bidNowhandler(item.body)} >Bid Now</a>}>
-						{item.body && item.body.proposalQuestions ? item.body.proposalQuestions.map((questions: any, value: any) => {
-							return (<p id={item.body.id + value}>{JSON.stringify(questions)}</p>)
-						}) : <p>No Details</p>}
+						{item.body && item.body.proposalQuestions ? Object.keys(item.body.proposalQuestions[0]).map((key: any, value: any) => {
+                            return (<p id={item.body.id + value}>{key + ':' + item.body.proposalQuestions[0][key]}</p>)
+                        }) : <p>No Details</p>}
 						{/* {item.body && item.body.proposalQuestions ? Object.keys(item.body.proposalQuestions).map((id: any, value: any) => {
 							return (<p id={value}>{item.body.proposalQuestions[id]}</p>)
 						}) : <p>No Details</p>} */}

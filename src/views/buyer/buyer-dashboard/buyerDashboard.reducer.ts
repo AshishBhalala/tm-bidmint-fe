@@ -1,48 +1,45 @@
 import * as Actions from "constant/action";
 import { fromJS, merge } from "immutable";
 import { FluxStandardAction } from "__utils/type";
-
 export interface BuyerDashboardState {
-  saveproposaldata: unknown,
-  saveproposalError: unknown,
-  publishPropsalData: unknown,
-  publishProposalError: unknown,
-  allProposal : unknown,
-  allProposalError : unknown
+  isFetching: boolean;
+  error: undefined | string;
 }
 const rawState: BuyerDashboardState = {
-  saveproposaldata: null,
-  saveproposalError: null,
-  publishPropsalData: null,
-  publishProposalError: null,
-  allProposal : [{}],
-  allProposalError: null
-
+  isFetching: false,
+  error: undefined,
 };
 const intialState = fromJS(rawState);
-
-export default function buyerDashboardReducer(
+export default function bellerDashboardReducer(
   state = intialState,
   action: FluxStandardAction
 ) {
   switch (action.type) {
     case Actions.SAVE_PROPOSAL_FORM_SUCCESS:
-      return merge(state, fromJS({ saveproposaldata: action.payload.data }));
+      return merge(state, fromJS({ premiumInsights: action.payload.data }));
     case Actions.SAVE_PROPOSAL_FORM_ERROR:
-      return merge(state, fromJS({ saveproposalError: action.payload.data }));
+      return merge(state, fromJS({ premiumInsights: action.payload.data }));
     case Actions.PUBLISH_PROPOSAL_SUCCESS:
-      return merge(state, fromJS({ publishPropsalData: action.payload.data }));
+      return merge(state, fromJS({ premiumInsights: action.payload.data }));
     case Actions.PUBLISH_PROPOSAL_ERROR:
-      return merge(state, fromJS({ publishProposalError: action.payload.data }));
+      return merge(state, fromJS({ premiumInsights: action.payload.data }));
     case Actions.GET_PROPOSAL_SUCCESS:
-      return merge(state, fromJS({ allProposal: action.payload.data }));
+      return merge(state, fromJS({ proposal: action.payload.data }));
     case Actions.GET_PROPOSAL_ERROR:
-      return merge(state, fromJS({ allProposalError: action.payload.data }));
+      return merge(state, fromJS({ proposalError: action.payload.data }));
     case Actions.GET_PROPOSAL_INFO_SUCCESS:
       return merge(state, fromJS({ proposalInfo: action.payload.data }));
     case Actions.GET_PROPOSAL_INFO_ERROR:
       return merge(state, fromJS({ proposalInfoError: action.payload.data }));
+    case Actions.GET_PROPOSAL_BIDS_SUCCESS:
+          return merge(state, fromJS({ proposalBids: action.payload.data }));
+    case Actions.GET_PROPOSAL_BIDS_ERROR:
+          return merge(state, fromJS({ proposalBidsError: action.payload.data }));
+   case 'GET_PROPOSAL_BIDS_RESET':
+              return merge(state, fromJS({ proposalBids: null, proposalBidsError: null }));
     default:
       return state;
   }
 }
+
+

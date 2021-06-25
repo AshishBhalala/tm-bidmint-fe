@@ -161,3 +161,89 @@ export const getProposalInfoEpic: Epic<
   );
 };
 
+
+export const getProposalBidsEpic: Epic<
+  FluxStandardAction,
+  FluxStandardAction
+> = (action$) => {
+  return action$.pipe(
+    ofType(Actions.GET_PROPOSAL_BIDS),
+    mergeMap((action) => {
+      const { proposalId } = action.payload;
+			const url = resolveURLParams(
+				API_CONSTANTS.GET_BID_PER_PROPOSAL,
+        { proposalId: proposalId },
+				null
+			  );
+			  
+      return get(
+        url,
+        {},
+        true
+      ).pipe(
+        map(
+          (response: AjaxResponse | AjaxError): FluxStandardAction => {
+            if (response.status === 200) {
+              return {
+                type: Actions.GET_PROPOSAL_BIDS_SUCCESS,
+                payload: {
+                  data: response.response
+                }
+              };
+            } else {
+              return {
+                type: Actions.GET_PROPOSAL_BIDS_ERROR,
+                payload: {
+                  data: response
+                }
+              };
+            }
+          }
+        ),
+        catchError((error) => of({ type: Actions.GET_PROPOSAL_BIDS_ERROR, payload: {data: error } }))
+      );
+    })
+  );
+};
+
+
+export const acceptBidEpic: Epic<
+  FluxStandardAction,
+  FluxStandardAction
+> = (action$) => {
+  return action$.pipe(
+    ofType('ACCEPT_BIDS'),
+    mergeMap((action) => {
+      const { bidId } = action.payload;
+			const url = API_CONSTANTS.ACCEPT_BID_ID;
+       
+			  
+      return post(
+        url,
+        action.payload,
+        true
+      ).pipe(
+        map(
+          (response: AjaxResponse | AjaxError): FluxStandardAction => {
+            if (response.status === 200) {
+              return {
+                type: 'ACCEPT_BIDS_SUCCESS',
+                payload: {
+                  data: response.response
+                }
+              };
+            } else {
+              return {
+                type: 'ACCEPT_BIDS_ERROR',
+                payload: {
+                  data: response
+                }
+              };
+            }
+          }
+        ),
+        catchError((error) => of({ type: Actions.GET_PROPOSAL_BIDS_ERROR, payload: {data: error } }))
+      );
+    })
+  );
+};
