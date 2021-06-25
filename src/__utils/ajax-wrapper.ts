@@ -117,6 +117,7 @@ export const post = (
 		url = baseServiceURL + url;
 	}
 	url = baseUrl + url;
+
 	return ajax({
 		url: url,
 		method: "POST",
@@ -137,7 +138,7 @@ export const put = (url: string, headers?: any, showLoader?: boolean) => {
 		url: url,
 		method: "PUT",
 		// crossDomain: true,
-		withCredentials: true,
+		withCredentials: false,
 		headers: Object.assign({}, getDefaultHeaders(), headers)
 	}).pipe(
 		map(
@@ -160,7 +161,7 @@ export const deleteRequest = (
 		url: url,
 		method: "DELETE",
 		// crossDomain: true,
-		withCredentials: true,
+		withCredentials: false,
 		headers: Object.assign({}, getDefaultHeaders(), headers)
 	}).pipe(
 		map(

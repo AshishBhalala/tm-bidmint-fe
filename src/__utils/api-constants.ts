@@ -9,7 +9,7 @@ export enum API_CONSTANTS {
 
 	PUBLISH_BID = "/api/bidmint/v1/publish-bid",
 
-	GET_PROPOSAL = "/api/bidmint/v1/get-proposal",
+	GET_PROPOSAL = "/api/bidmint/v1/get-proposals",
 
 	GET_BIDS_SELLER = "/api/bidmint/v1/get-bids",
 

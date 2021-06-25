@@ -27,13 +27,13 @@ export default function bellerDashboardReducer(
     case Actions.PUBLISH_PROPOSAL_ERROR:
       return merge(state, fromJS({ premiumInsights: action.payload.data }));
     case Actions.GET_PROPOSAL_SUCCESS:
-      return merge(state, fromJS({ premiumInsights: action.payload.data }));
+      return merge(state, fromJS({ proposal: action.payload.data }));
     case Actions.GET_PROPOSAL_ERROR:
-      return merge(state, fromJS({ premiumInsights: action.payload.data }));
+      return merge(state, fromJS({ proposalError: action.payload.data }));
     case Actions.GET_PROPOSAL_INFO_SUCCESS:
-      return merge(state, fromJS({ premiumInsights: action.payload.data }));
+      return merge(state, fromJS({ proposalInfo: action.payload.data }));
     case Actions.GET_PROPOSAL_INFO_ERROR:
-      return merge(state, fromJS({ premiumInsights: action.payload.data }));
+      return merge(state, fromJS({ proposalInfoError: action.payload.data }));
     default:
       return state;
   }
