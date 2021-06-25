@@ -22,6 +22,10 @@ const getProposalBids = (state: any) =>
   state.getIn(["buyerDashboardReducer", "proposalBids"]);
 const getproposalBidsError = (state: any) =>
   state.getIn(["buyerDashboardReducer", "proposalBidsError"]);
+const getAcceptBid = (state: any) =>
+  state.getIn(["buyerDashboardReducer", "acceptBid"]);
+const getAcceptBidError = (state: any) =>
+  state.getIn(["buyerDashboardReducer", "acceptBidError"]);
 const BuyerDashBoardSelector = createSelector(
   [
     getIsFetching,
@@ -34,7 +38,9 @@ const BuyerDashBoardSelector = createSelector(
     getProposalInfo,
     getProposalInfoError,
     getProposalBids,
-    getproposalBidsError
+    getproposalBidsError,
+    getAcceptBid,
+    getAcceptBidError
   ],
   (
     isFetching,
@@ -47,7 +53,9 @@ const BuyerDashBoardSelector = createSelector(
     proposalInfo,
     proposalInfoError,
     proposalBids,
-    proposalBidsError
+    proposalBidsError,
+    acceptBid,
+    acceptBidError
   ) => ({
     isFetching,
     savedProposal,
@@ -59,7 +67,9 @@ const BuyerDashBoardSelector = createSelector(
     proposalInfo,
     proposalInfoError,
     proposalBids,
-    proposalBidsError
+    proposalBidsError,
+    acceptBid,
+    acceptBidError
   })
 );
 export default BuyerDashBoardSelector;

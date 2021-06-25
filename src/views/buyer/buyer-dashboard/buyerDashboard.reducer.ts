@@ -36,7 +36,11 @@ export default function bellerDashboardReducer(
     case Actions.GET_PROPOSAL_BIDS_ERROR:
           return merge(state, fromJS({ proposalBidsError: action.payload.data }));
    case 'GET_PROPOSAL_BIDS_RESET':
-              return merge(state, fromJS({ proposalBids: null, proposalBidsError: null }));
+             return merge(state, fromJS({ proposalBids: null, proposalBidsError: null }));
+   case 'ACCEPT_BIDS_SUCCESS':
+          return merge(state, fromJS({ acceptBid: action.payload.data }));
+    case 'ACCEPT_BIDS_ERROR':
+          return merge(state, fromJS({ acceptBidError: action.payload.data }));
     default:
       return state;
   }

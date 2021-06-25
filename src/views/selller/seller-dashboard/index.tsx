@@ -19,6 +19,8 @@ interface SellerDashboardProps {
 }
 
 const SellerDashboard: React.FC<SellerDashboardProps> = () => {
+
+	const sellerIdValue = window.location.href.split('sellerId=')[1];
 	const dispatch = useDispatch();
 	const [showProposalDetail, setShowProposalDetail] = useState<boolean>(false);
 	const [showProposals, setShowProposals] = useState<boolean>(false);
@@ -36,7 +38,7 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 	const [bidSaved, setBidSaved] = useState<boolean>(false);
 
 
-	const [sellerId, setSellerId] = useState<any>("74dd91fa-4564-45ca-a94f-610438628f9a");
+	const [sellerId, setSellerId] = useState<any>(sellerIdValue);
 
 	const [proposalSaveType, setProposalSaveType] = useState<any>(null);
 

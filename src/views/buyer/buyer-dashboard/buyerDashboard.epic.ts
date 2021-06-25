@@ -214,9 +214,12 @@ export const acceptBidEpic: Epic<
   return action$.pipe(
     ofType('ACCEPT_BIDS'),
     mergeMap((action) => {
-      const { bidId } = action.payload;
-			const url = API_CONSTANTS.ACCEPT_BID_ID;
-       
+      const { bidId } = action.payload;       
+			const url = resolveURLParams(
+				API_CONSTANTS.ACCEPT_BID_ID,
+        { bidId: bidId },
+				null
+			  );
 			  
       return post(
         url,

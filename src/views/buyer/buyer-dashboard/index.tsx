@@ -16,6 +16,9 @@ interface BuyerDashboardProps {
 
 const BuyerDashboard: React.FC<BuyerDashboardProps> = () => {
 
+	const buyerIdValue = window.location.href.split('buyerId=')[1];
+	window.sessionStorage.setItem('buyerId', buyerIdValue);
+	
 	const dispatch = useDispatch();
 	const [showProposals, setShowProposals] = useState<boolean>(false);
 	const [showProposalBids, setshowProposalBids] = useState<boolean>(false);
@@ -24,7 +27,7 @@ const BuyerDashboard: React.FC<BuyerDashboardProps> = () => {
 	const [proposalFormData, setProposalFormData] = useState<any>();
 	const [proposalId, setProposalId] = useState<any>();
 	const [proposalData, setProposalData] = useState<any>();
-	const { proposal, proposalError, proposalInfo, proposalInfoError, proposalBids } = propsToJS(useSelector(BuyerDashBoardSelector));
+	const { proposal, proposalError, proposalInfo, proposalInfoError, proposalBids, acceptBid } = propsToJS(useSelector(BuyerDashBoardSelector));
 	const [proposalSaveType, setProposalSaveType] = useState<any>(null);
 	const [proposalTurnAroundT, setproposalTurnAroundT] = useState<any>(null);
 	const { saveProposalResponseData, saveproposalResponseError,
@@ -32,7 +35,7 @@ const BuyerDashboard: React.FC<BuyerDashboardProps> = () => {
 	} = propsToJS(useSelector(saveProposalSelector));
 
 	useEffect(() => {
-		dispatch({ type: Actions.GET_PROPOSAL, payload: { type: "buyer",  id: "f2d78647-00ed-46fb-b330-9295d4674882" } })
+		dispatch({ type: Actions.GET_PROPOSAL, payload: { type: "buyer",  id: buyerIdValue } })
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dispatch]);
 
@@ -56,6 +59,11 @@ const BuyerDashboard: React.FC<BuyerDashboardProps> = () => {
 		}
 	}, [useDeepCompare(allProposal)])
 
+	useEffect(() => {
+		if (acceptBid) {
+		    message.success("Bid Accepted")
+		}
+	}, [useDeepCompare(acceptBid)])
 
 	const viewProposalNowhandler = (detail: any) => {
 		let proposalId = detail.id;
@@ -83,7 +91,7 @@ const BuyerDashboard: React.FC<BuyerDashboardProps> = () => {
 	}
 
 	const filterByhandler = (filter: any) => {
-		dispatch({ type: Actions.GET_PROPOSAL, payload: { type: "buyer", status: filter, id: "6f4c51be-1440-4103-ab11-c6d893cb9dfe" } });
+		dispatch({ type: Actions.GET_PROPOSAL, payload: { type: "buyer", status: filter, id: buyerIdValue } });
 	}
 
 	useEffect(() => {
@@ -117,7 +125,7 @@ const BuyerDashboard: React.FC<BuyerDashboardProps> = () => {
 	const saveProposal = (formdata: any, saveType: string) => {
 		let proposalQuestions: any = [];
 		let name: string = "vaishnavi";
-		let buyerId: string = "f2d78647-00ed-46fb-b330-9295d4674882"
+		let buyerId: string = buyerIdValue
 
 		proposalQuestions.push(formdata);
 

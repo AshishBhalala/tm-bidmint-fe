@@ -56,7 +56,8 @@ export const ProposalForm = () => {
   const saveProposal = (formdata: any, saveType : string) => {
     let proposalQuestions: any[] = [];
     let name: string = "vaishnavi";
-    let buyerId: string = "f2d78647-00ed-46fb-b330-9295d4674882"
+    let buyerId : string | null=	window.sessionStorage.getItem('buyerId');
+
 
     proposalQuestions.push(formdata);
     console.log("turn around time ", formdata['turnAroundTime']);
