@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSelector } from "reselect";
-
 const getIsFetching = (state: any) =>
   state.getIn(["buyerDashboardReducer", "isFetching"]);
 const getSaveProposal = (state: any) =>
@@ -19,7 +18,10 @@ const getProposalInfo = (state: any) =>
   state.getIn(["buyerDashboardReducer", "proposalInfo"]);
 const getProposalInfoError = (state: any) =>
   state.getIn(["buyerDashboardReducer", "proposalInfoError"]);
-
+const getProposalBids = (state: any) =>
+  state.getIn(["buyerDashboardReducer", "proposalBids"]);
+const getproposalBidsError = (state: any) =>
+  state.getIn(["buyerDashboardReducer", "proposalBidsError"]);
 const BuyerDashBoardSelector = createSelector(
   [
     getIsFetching,
@@ -30,7 +32,9 @@ const BuyerDashBoardSelector = createSelector(
     getProposal,
     getProposalError,
     getProposalInfo,
-    getProposalInfoError
+    getProposalInfoError,
+    getProposalBids,
+    getproposalBidsError
   ],
   (
     isFetching,
@@ -41,7 +45,9 @@ const BuyerDashBoardSelector = createSelector(
     proposal,
     proposalError,
     proposalInfo,
-    proposalInfoError
+    proposalInfoError,
+    proposalBids,
+    proposalBidsError
   ) => ({
     isFetching,
     savedProposal,
@@ -51,8 +57,11 @@ const BuyerDashBoardSelector = createSelector(
     proposal,
     proposalError,
     proposalInfo,
-    proposalInfoError
+    proposalInfoError,
+    proposalBids,
+    proposalBidsError
   })
 );
-
 export default BuyerDashBoardSelector;
+
+

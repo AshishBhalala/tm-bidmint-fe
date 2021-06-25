@@ -19,6 +19,12 @@ export const FormModel = (props: any) => {
 	const [proposalData, setProposalData] = useState(null);
 	const [visible, setVisible] = useState(false);
 
+	useEffect(()=>{
+		if(buyerData){
+			setProposalData(buyerData);
+		}
+	},[buyerData])
+
 	const onProposalModules = (values: any, proposalData : any) => {
 		proposalData['turnAroundTime'] = values.turnArroundTime;
 		console.log("publsih proposal data", proposalData);

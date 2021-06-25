@@ -5,7 +5,7 @@ import { mergeMap, takeUntil } from 'rxjs/operators';
 import { combineEpics } from 'redux-observable';
 import { excuteSaveProposalForm, excutePublishProposal} from 'views/buyer/buyer-proposal-form/proposalForm.epic';
 import { saveBidEpic, publishBidEpic, getBidsBySellerEpic, getBidInfoEpic } from 'views/selller/seller-dashboard/sellerDashboard.epic';
-import { saveProposalEpic, publishProposalEpic, getProposalEpic, getProposalInfoEpic } from 'views/buyer/buyer-dashboard/buyerDashboard.epic';
+import { saveProposalEpic, publishProposalEpic, getProposalEpic, getProposalInfoEpic, getProposalBidsEpic, acceptBidEpic } from 'views/buyer/buyer-dashboard/buyerDashboard.epic';
 
 
 export const epic$ = new BehaviorSubject(
@@ -19,7 +19,9 @@ export const epic$ = new BehaviorSubject(
 		getProposalEpic,
 		getProposalInfoEpic,
 		excuteSaveProposalForm,
-		excutePublishProposal
+		excutePublishProposal,
+		getProposalBidsEpic,
+		acceptBidEpic
 		));
 export const dependencies = { getJSON: ajax.getJSON };
 

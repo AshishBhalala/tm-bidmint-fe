@@ -1,7 +1,6 @@
 import * as Actions from "constant/action";
 import { fromJS, merge } from "immutable";
 import { FluxStandardAction } from "__utils/type";
-
 export interface BuyerDashboardState {
   isFetching: boolean;
   error: undefined | string;
@@ -9,10 +8,8 @@ export interface BuyerDashboardState {
 const rawState: BuyerDashboardState = {
   isFetching: false,
   error: undefined,
-
 };
 const intialState = fromJS(rawState);
-
 export default function bellerDashboardReducer(
   state = intialState,
   action: FluxStandardAction
@@ -34,7 +31,15 @@ export default function bellerDashboardReducer(
       return merge(state, fromJS({ proposalInfo: action.payload.data }));
     case Actions.GET_PROPOSAL_INFO_ERROR:
       return merge(state, fromJS({ proposalInfoError: action.payload.data }));
+    case Actions.GET_PROPOSAL_BIDS_SUCCESS:
+          return merge(state, fromJS({ proposalBids: action.payload.data }));
+    case Actions.GET_PROPOSAL_BIDS_ERROR:
+          return merge(state, fromJS({ proposalBidsError: action.payload.data }));
+   case 'GET_PROPOSAL_BIDS_RESET':
+              return merge(state, fromJS({ proposalBids: null, proposalBidsError: null }));
     default:
       return state;
   }
 }
+
+

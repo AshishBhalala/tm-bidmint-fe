@@ -35,6 +35,7 @@ export const deleteCookie = (name: any, path: string | undefined) => {
 //   //   typeof document.cookie === "string" &&
 //   //   getCookie("csrftoken")
 // };
+let baseUrl = 'http://localhost:1212';
 
 export const getDefaultHeaders = () => {
 	return {
@@ -49,7 +50,7 @@ export const getContentTypeJsonHeader = () => {
 		"Content-Type": "application/json"
 	}
 }
-let baseUrl = 'http://localhost:1212';
+
 export const getJSON = (
 	url: string,
 	headers?: any
@@ -116,6 +117,7 @@ export const post = (
 		url = baseServiceURL + url;
 	}
 	url = baseUrl + url;
+
 	return ajax({
 		url: url,
 		method: "POST",

@@ -17,4 +17,8 @@ export enum API_CONSTANTS {
 	
 	GET_BID_INFO = "/api/bidmint/v1/get-bid-info",
 
+	GET_BID_PER_PROPOSAL= "/api/bidmint/v1/bids-per-proposal",
+
+	ACCEPT_BID_ID= "/api/bidmint/v1/accept-bid",
+
 }

@@ -1,0 +1,116 @@
+.information-card-simple .ant-card-body {
+    padding: 15px;
+    zoom   : 1;
+}
+
+.information-card-simple .ant-card-meta-detail {
+    display: flex;
+}
+
+.information-card-simple .ant-card-meta-description {
+    padding-left: 1rem;
+    padding-top : 0.2rem;
+}
+
+.information-card-simple .ant-card-meta-title {
+    padding-left: 0.1rem;
+}
+
+.information-card-simple .ant-card-body {
+    padding: 0px;
+    width  : 100%;
+}
+
+.information-card-simple .ant-card-grid {
+    padding: 5px;
+}
+
+.information-card-simple .ant-progress {
+    width: 10rem;
+}
+
+.information-card-simple .status-card-content {
+    display        : "flex";
+    justify-content: "space-between";
+}
+
+.information-card-simple .ant-card-head {
+    padding-left    : 0.2rem;
+    background-color: rgb(116, 183, 238);
+    background-image: linear-gradient(rgb(124, 188, 240), rgb(242, 248, 246));
+}
+
+.information-card-simple .ant-progress-text {
+    font-size: 0.8rem;
+}
+
+.information-card-simple .ant-progress-outer {
+    width: 90%;
+}
+
+
+/* animated styles */
+
+.information-card-animated .ant-card-body {
+    padding: 15px;
+    zoom   : 1;
+}
+
+.information-card-animated .ant-card-meta-detail {
+    display: flex;
+}
+
+.information-card-animated .ant-card-meta-description {
+    padding-left: 1rem;
+    padding-top : 0.2rem;
+}
+
+.information-card-animated .ant-card-meta-title {
+    padding-left: 0.1rem;
+}
+
+.information-card-animated .ant-card-body {
+    padding: 0px;
+    width  : 100%;
+}
+
+.information-card-animated .ant-card-grid {
+    padding: 5px;
+}
+
+.information-card-animated .ant-progress {
+    width: 10rem;
+}
+
+.information-card-animated .status-card-content {
+    display        : "flex";
+    justify-content: "space-between";
+}
+
+.information-card-animated .ant-card-head {
+    padding-left    : 0.2rem;
+    background-color: rgb(116, 185, 241);
+    background-image: linear-gradient(rgb(114, 180, 235), rgb(242, 248, 246));
+}
+
+.information-card-animated .ant-progress-text {
+    font-size: 0.8rem;
+}
+
+.information-card-animated .ant-progress-outer {
+    width: 90%;
+}
+
+.information-card-animated {
+    box-shadow: 0 0 5px rgb(83, 169, 240);
+    font-size : 0.9rem;
+}
+
+.clickable :active {
+    transform: translateY(4px);
+}
+
+.clickable :hover {
+    box-shadow: 0 0 10px rgb(105, 185, 250);
+    cursor    : pointer;
+}
