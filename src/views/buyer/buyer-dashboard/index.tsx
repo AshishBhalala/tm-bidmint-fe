@@ -217,12 +217,20 @@ const BuyerDashboard: React.FC<BuyerDashboardProps> = () => {
 				{proposalBids ? proposalBids.map((item: any) => {
 					return <Card id={item} title="Bid Details" extra={<a href="#" onClick={() => viewBidshandler(item.body.id)} > Accept Bids</a>}>
 						{item.body && item.body.proposalAnswers ? Object.keys(item.body.proposalAnswers[0]).map((key: any, value: any) => {
-							return (<p id={item.body.id + value}>{key + ':' + item.body.proposalAnswers[0][key]}</p>)
+	
+							// return (<p id={item.body.id + value}>{key + ':' + item.body.proposalAnswers[0][key]}</p>)
+							return (<p id={item.body.id + value}><b>{ _.startCase(key) } </b> : <span style={{ textTransform: "uppercase" }}>{item.body.proposalAnswers[0][key]}</span> </p>)
+
 						})
 
 							: <p>No Requirement available</p>
 						}
-						{<p> bidsAmmount : {item.body.amount}    BidScore : {item.body.bidStats.bidScore} </p>}
+						{<div>
+							<Tag color="green"><p><b>{ _.startCase('bidsAmmount') } </b> : <span style={{ textTransform: "uppercase" }}>{item.body.amount}</span> </p></Tag>
+							<Tag color="green"><p><b>{ _.startCase('BidScore') } </b> : <span style={{ textTransform: "uppercase" }}>{item.body.bidStats.bidScore}</span> </p></Tag>
+
+							</div>}
+						{/* {<p> bidsAmmount : {item.body.amount}    BidScore : {item.body.bidStats.bidScore} </p>} */}
 					</Card>
 				}) : null}
 			</Modal>}
