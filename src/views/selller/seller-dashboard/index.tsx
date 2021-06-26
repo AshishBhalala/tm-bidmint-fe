@@ -177,7 +177,7 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
   		</Dropdown>
 			{proposalData ? proposalData.map((item: any, index: any) => {
 				return (
-				<Card id={index} style={{marginTop: 16 }}  className=  {'bidmint-dashboard-info-' + statusCode[item.body.status] } title="Card title" extra={<div>  <Tag color= {statusCode[item.body.status]}> {item.body.status}</Tag><a href="#" onClick={() => bidNowhandler(item.body)} >Bid Now</a></div>}>
+				<Card id={index} style={{marginTop: 16 }}  className=  {'bidmint-dashboard-info-' + statusCode[item.body.status] } title= {'Prposal Card '+ (index+1)} extra={<div>  <Tag color= {statusCode[item.body.status]}> {item.body.status}</Tag><a href="#" onClick={() => bidNowhandler(item.body)} >Bid Now</a></div>}>
 						{item.body && item.body.proposalQuestions ? Object.keys(item.body.proposalQuestions[0]).map((key: any, value: any) => {
 							// return (<p id={item.body.id + value}>{key + ':' + item.body.proposalQuestions[0][key]}</p>)
 							return (<Card.Grid  key={key}  hoverable={false}>
