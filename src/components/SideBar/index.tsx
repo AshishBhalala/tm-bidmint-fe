@@ -21,7 +21,7 @@ const SidebarMenu: React.FC<SidebarMenuProps> = (props: SidebarMenuProps) => {
 			<img
 				src={BidMint}
 				alt=""
-				style={{ height: '59px', width: '200px' }}
+				style={{ height: '100px', width: '200px' }}
 			/>
 			<Menu
 				theme="dark"
