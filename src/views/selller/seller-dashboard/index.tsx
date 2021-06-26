@@ -176,7 +176,7 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
       </a>
   		</Dropdown>
 			{proposalData ? proposalData.map((item: any, index: any) => {
-				return (
+				return item.body ? (
 				<Card id={index} style={{marginTop: 16 }}  className=  {'bidmint-dashboard-info-' + statusCode[item.body.status] } title= {'Prposal Card '+ (index+1)} extra={<div>  <Tag color= {statusCode[item.body.status]}> {item.body.status}</Tag><a href="#" onClick={() => bidNowhandler(item.body)} >Bid Now</a></div>}>
 						{item.body && item.body.proposalQuestions ? Object.keys(item.body.proposalQuestions[0]).map((key: any, value: any) => {
 							// return (<p id={item.body.id + value}>{key + ':' + item.body.proposalQuestions[0][key]}</p>)
@@ -188,7 +188,7 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 						{/* {item.body && item.body.proposalQuestions ? Object.keys(item.body.proposalQuestions).map((id: any, value: any) => {
 							return (<p id={value}>{item.body.proposalQuestions[id]}</p>)
 						}) : <p>No Details</p>} */}
-			  </Card>)
+			  </Card>) : (<p>No Proposal Found</p>)
 			}): null}
       { showProposalDetail && <Modal
 					title="Proposal Detail"

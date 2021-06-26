@@ -187,7 +187,7 @@ const BuyerDashboard: React.FC<BuyerDashboardProps> = () => {
 				</a>
 			</Dropdown>
 			{proposalData ? proposalData.map((item: any, index: any) => {
-				return (
+				return item.body ? (
 					<Card id={index} style={{ marginTop: 16}} className=  {'bidmint-dashboard-info-' + statusCode[item.body.status] } title={'Proposal Card ' + (index + 1) } extra={<div> <Tag color= {statusCode[item.body.status]}> {item.body.status}</Tag> <a  style= {{marginRight: 20}} onClick={() => viewProposalNowhandler(item.body)} >Publish Proposal</a>  <a onClick={() => getBids(item.body.id)} > Show Bid</a></div>}>
 
 						{item.body && item.body.proposalQuestions ? Object.keys(item.body.proposalQuestions[0]).map((key: any, value: any) => {
@@ -197,7 +197,7 @@ const BuyerDashboard: React.FC<BuyerDashboardProps> = () => {
 							  </Card.Grid>
 
 						}) : <p>No Details</p>}
-					</Card>)
+					</Card>): (<p>No Proposal Found</p>)
 			}) : null}
 			{showProposalDetail && <Modal
 				title="Proposal Detail"
