@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Card, Modal, message, Menu, Dropdown, Button } from 'antd';
+import { Card, Modal, message, Menu, Dropdown, Button, Row, Col, Tag } from 'antd';
 import { FormModel } from 'components/proposal-form';
 import { useDispatch, useSelector } from 'react-redux';
 import BuyerDashBoardSelector from './buyerDashboard.selector';
@@ -9,16 +9,17 @@ import { useDeepCompare } from 'hooks/use-deep-memo';
 import * as Actions from 'constant/action'
 import { DownOutlined } from '@ant-design/icons';
 import saveProposalSelector from '../buyer-proposal-form/proposalForm.selector';
-
+import _ from 'lodash';
+import './index.css'
 interface BuyerDashboardProps {
 	someProp: string;
 }
 
 const BuyerDashboard: React.FC<BuyerDashboardProps> = () => {
 
-	const buyerIdValue : any = window.location.href.split('buyerId=')[1] || window.sessionStorage.getItem('buyerId');
+	const buyerIdValue: any = window.location.href.split('buyerId=')[1] || window.sessionStorage.getItem('buyerId');
 	window.sessionStorage.setItem('buyerId', buyerIdValue);
-	
+
 	const dispatch = useDispatch();
 	const [showProposals, setShowProposals] = useState<boolean>(false);
 	const [showProposalBids, setshowProposalBids] = useState<boolean>(false);
@@ -35,7 +36,7 @@ const BuyerDashboard: React.FC<BuyerDashboardProps> = () => {
 	} = propsToJS(useSelector(saveProposalSelector));
 
 	useEffect(() => {
-		dispatch({ type: Actions.GET_PROPOSAL, payload: { type: "buyer",  id: buyerIdValue } })
+		dispatch({ type: Actions.GET_PROPOSAL, payload: { type: "buyer", id: buyerIdValue } })
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dispatch]);
 
@@ -61,7 +62,9 @@ const BuyerDashboard: React.FC<BuyerDashboardProps> = () => {
 
 	useEffect(() => {
 		if (acceptBid) {
-		    message.success("Bid Accepted")
+			message.success("Bid Accepted");
+			closeModel()
+
 		}
 	}, [useDeepCompare(acceptBid)])
 
@@ -108,6 +111,7 @@ const BuyerDashboard: React.FC<BuyerDashboardProps> = () => {
 				dispatch({ type: Actions.RESET_PUBLISH_PROPOSAL_API_DATA });
 				dispatch({ type: Actions.PUBLISH_PROPOSAL_API, payload: publishProposalrequest })
 			}
+			closeModel()
 			setProposalSaveType(null);
 			setproposalTurnAroundT(null);
 		}
@@ -168,6 +172,13 @@ const BuyerDashboard: React.FC<BuyerDashboardProps> = () => {
 		dispatch({ type: "ACCEPT_BIDS", payload: { 'bidId': bidId } })
 	}
 
+	const statusCode : any = {
+		ACTIVE: 'orange',
+		DRAFT: 'blue',
+		ACCEPTED: 'green'
+	  };
+
+
 	return (
 		<div>
 			<Dropdown overlay={menu} trigger={['click']}>
@@ -177,19 +188,15 @@ const BuyerDashboard: React.FC<BuyerDashboardProps> = () => {
 			</Dropdown>
 			{proposalData ? proposalData.map((item: any, index: any) => {
 				return (
-					<Card id={index} style={{ marginTop: 16 }} title="Card title" extra={<a href="#" onClick={() => viewProposalNowhandler(item.body)} >Publish Proposal</a>}>
-						{/* {item.body && item.body.proposalQuestions ? item.body.proposalQuestions.map((questions: any, value: any) => {
-						return (<p id={item.body.id + value}>{JSON.stringify(questions)} <Button onClick={() => getBids(item.body.id)} > Show Bids </Button></p> )
-					}) : <p>No Details</p>} */}
+					<Card id={index} style={{ marginTop: 16}} className=  {'bidmint-dashboard-info-' + statusCode[item.body.status] } title={'Proposal Card ' + (index + 1) } extra={<div> <Tag color= {statusCode[item.body.status]}> {item.body.status}</Tag> <a  style= {{marginRight: 20}} onClick={() => viewProposalNowhandler(item.body)} >Publish Proposal</a>  <a onClick={() => getBids(item.body.id)} > Show Bid</a></div>}>
 
 						{item.body && item.body.proposalQuestions ? Object.keys(item.body.proposalQuestions[0]).map((key: any, value: any) => {
-							return (<p id={item.body.id + value}>{key + ':' + item.body.proposalQuestions[0][key]}</p>
-							)
+								return  <Card.Grid  key={key}  hoverable={false}>
+								<div><b>{ _.startCase(key) } </b> </div>
+								<div style={{ textTransform: "uppercase" }}>{item.body.proposalQuestions[0][key]}</div>
+							  </Card.Grid>
+
 						}) : <p>No Details</p>}
-						{<Button onClick={() => getBids(item.body.id)} > Show Bids </Button>}
-						{/* {item.body && item.body.proposalQuestions ? Object.keys(item.body.proposalQuestions).map((id: any, value: any) => {
-						return (<p id={value}>{item.body.proposalQuestions[id]}</p>)
-					}) : <p>No Details</p>} */}
 					</Card>)
 			}) : null}
 			{showProposalDetail && <Modal

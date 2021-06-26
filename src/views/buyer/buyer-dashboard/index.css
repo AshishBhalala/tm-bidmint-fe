@@ -1,0 +1,19 @@
+
+
+.bidmint-dashboard-info-green .ant-card-head {
+    padding-left: 0.2rem;
+    background-color: rgb(202, 231, 221);
+    background-image: linear-gradient(rgb(173, 211, 197), rgb(242, 248, 246));
+  }
+
+  .bidmint-dashboard-info-blue  .ant-card-head {
+    padding-left: 0.2rem;
+    background-color: rgb(189, 210, 238);
+    background-image: linear-gradient(rgb(175, 217, 230), rgb(242, 248, 246));
+  }
+
+  .bidmint-dashboard-info-orange  .ant-card-head {
+    padding-left: 0.2rem;
+    background-color: rgb(219, 174, 159);
+    background-image: linear-gradient(rgb(229, 177, 160), rgb(242, 248, 246));
+  }
