@@ -34,6 +34,7 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 	const [buyerId, setBuyerId] = useState<any>();
 	const [bidId, setBidId] = useState<any>();
 	const [bidAmount, setBidAmount] = useState<any>(null);
+	const [percent, setPercent] = useState<any>(null);
 
 
 	const [bidSaved, setBidSaved] = useState<boolean>(false);
@@ -66,6 +67,7 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 	useEffect(() => {
 		if(publishBid){
 			message.success("Bid saved successfully");
+			closeModel();
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [useDeepCompare(publishBid)]);
@@ -84,7 +86,7 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 				closeModel();
 				message.success("Bid saved successfully")
 			} else {          
-				dispatch({ type: Actions.PUBLISH_BID_QUERY, payload: {bidId : savedBids.bidId, amount: bidAmount, percent: 100}});
+				dispatch({ type: Actions.PUBLISH_BID_QUERY, payload: {bidId : savedBids.bidId, amount: bidAmount, percent: percent}});
 			}
 			setProposalSaveType(null);
 		}
@@ -139,6 +141,7 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 	 }
 	 	dispatch({ type: 'RESET_BID_DETAIL'});
 	  setBidAmount(formdata.BidAmount);
+		setPercent(formdata.percent);
 	  setProposalSaveType(saveType);
 		dispatch({ type: Actions.SAVE_BID_QUERY, payload: payLoad });
 	}

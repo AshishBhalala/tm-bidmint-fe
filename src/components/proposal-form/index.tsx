@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Checkbox, Radio, Select } from 'antd';
+import { Form, Input, Button, Checkbox, Radio, Select, InputNumber } from 'antd';
 import './index.css';
 import { TurnAroundModelForm } from 'components/turn-around-model';
 
@@ -165,6 +165,23 @@ export const FormModel = (props: any) => {
 				hidden={type === 'buyer'}
 			>
 				<Input disabled={type === 'buyer'} placeholder="Enter Bid Amount" type="number" />
+			</Form.Item>
+
+			<Form.Item
+				label="Enter percentage"
+				name="percent"
+				rules={[{ required: type == 'seller', message: 'Enter Percent' }]}
+				hidden={type === 'buyer'}
+			>
+				<InputNumber
+				disabled={type === 'buyer'}
+      	defaultValue={100}
+      	min={0}
+      	max={100}
+      	formatter={value => `${value}%`}
+      	parser={(value :any) => value.replace('%', '')}
+    	 />
+				{/* <Input disabled={type === 'buyer'} placeholder="Enter Percent" type="number" /> */}
 			</Form.Item>
 
 			<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
