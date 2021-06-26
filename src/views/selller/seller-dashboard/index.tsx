@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Card , Modal, Menu, Dropdown, message} from 'antd';
+import { Card , Modal, Menu, Dropdown, message, Tag} from 'antd';
 import { FormModel } from 'components/proposal-form';
 import { DownOutlined } from '@ant-design/icons';
 import { useDispatch} from 'react-redux';
@@ -9,10 +9,11 @@ import {  useSelector } from "react-redux";
 import { propsToJS } from "__utils/immutable-to-js";
 import BuyerDashBoardSelector from "../../buyer/buyer-dashboard/buyerDashboard.selector";
 import SellerDashBoardSelector from "../seller-dashboard/sellerDashboard.selector";
-
+import './index.css'
 
 
 import { useDeepCompare } from "hooks/use-deep-memo";
+import _ from 'lodash';
 
 interface SellerDashboardProps {
 	someProp: string;
@@ -156,6 +157,14 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
 			<Menu.Item key="5" onClick={()=>filterByhandler("ACTIVE")}>Active</Menu.Item>
 		</Menu>
 	);
+
+	const statusCode : any = {
+		ACTIVE: 'orange',
+		DRAFT: 'blue',
+		ACCEPTED: 'green'
+	  };
+
+
 	return (
 		<div>
 			<Dropdown overlay={menu} trigger={['click']}>
@@ -165,9 +174,13 @@ const SellerDashboard: React.FC<SellerDashboardProps> = () => {
   		</Dropdown>
 			{proposalData ? proposalData.map((item: any, index: any) => {
 				return (
-				<Card id={index} style={{marginTop: 16 }} title="Card title" extra={<a href="#" onClick={() => bidNowhandler(item.body)} >Bid Now</a>}>
+				<Card id={index} style={{marginTop: 16 }}  className=  {'bidmint-dashboard-info-' + statusCode[item.body.status] } title="Card title" extra={<div>  <Tag color= {statusCode[item.body.status]}> {item.body.status}</Tag><a href="#" onClick={() => bidNowhandler(item.body)} >Bid Now</a></div>}>
 						{item.body && item.body.proposalQuestions ? Object.keys(item.body.proposalQuestions[0]).map((key: any, value: any) => {
-                            return (<p id={item.body.id + value}>{key + ':' + item.body.proposalQuestions[0][key]}</p>)
+							// return (<p id={item.body.id + value}>{key + ':' + item.body.proposalQuestions[0][key]}</p>)
+							return (<Card.Grid  key={key}  hoverable={false}>
+							<div><b>{ _.startCase(key) } </b> </div>
+							<div style={{ textTransform: "uppercase" }}>{item.body.proposalQuestions[0][key]}</div>
+						  </Card.Grid>)
                         }) : <p>No Details</p>}
 						{/* {item.body && item.body.proposalQuestions ? Object.keys(item.body.proposalQuestions).map((id: any, value: any) => {
 							return (<p id={value}>{item.body.proposalQuestions[id]}</p>)
