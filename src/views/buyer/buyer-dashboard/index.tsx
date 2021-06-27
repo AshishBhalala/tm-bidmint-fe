@@ -10,6 +10,7 @@ import { some } from 'lodash/fp';
 
 const BuyerDashboard: React.FC<any> = ( ) => {
 	const {getBuyerProposerDataOnSuccess, getBuyerProposerDataOnError} = useSelector(BuyerProposalSelector);
+
 	const objectData = {type : "buyer", status :"ACTIVE", id: "28d274f7-f73c-45e0-b848-6c709845d742"};
 	const dispatch = useDispatch();
 	useEffect(() => {
